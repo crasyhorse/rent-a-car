@@ -21,10 +21,6 @@ describe('car.repository', () => {
 
     describe('getCars', () => {
         describe('returns', () => {
-            afterEach(() => {
-                vi.restoreAllMocks();
-            });
-
             it('a list of cars.', async () => {
                 await expect(getCars()).resolves.toMatchSnapshot();
             });
