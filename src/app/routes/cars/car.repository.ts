@@ -3,7 +3,7 @@ import jsonata from 'jsonata';
 import type { Database } from '@/db/database.model';
 import type { Car } from '@/db/car.model';
 
-const getCarById = async (id: string): Promise<Car | undefined> => {
+const getCarById = async (id: Car["id"]): Promise<Car | undefined> => {
     const data: Database = await readDatabase();
 
     const expression = jsonata(`cars[id="${id}"]`);
