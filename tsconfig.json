@@ -1,0 +1,12 @@
+{
+    "extends": "@tsconfig/node20/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "paths": { "@/*": ["src/*"] },
+        "resolveJsonModule": true,
+        "module": "ESNext",
+        "moduleResolution": "node"
+    }
+}
+

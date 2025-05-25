@@ -1,0 +1,365 @@
+{
+    "cars": [
+        {
+            "id": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37",
+            "brand": "Rustleaf",
+            "name": "Traveler",
+            "class": "Compact Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": false,
+            "dailyRate": 80,
+            "imageURL": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37.jpg"
+        },
+        {
+            "id": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+            "brand": "Nightfall",
+            "name": "Rambler",
+            "class": "Compact Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 94,
+            "imageURL": "4ec570ea-3afd-4fad-af60-dad23d4c7d37.jpg"
+        },
+        {
+            "id": "f96549fa-e27d-428a-a42d-8ad486aebad3",
+            "brand": "Celestial",
+            "name": "Chariot",
+            "class": "Upper Class",
+            "type": "Cabriolet",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 81,
+            "imageURL": "f96549fa-e27d-428a-a42d-8ad486aebad3.jpg"
+        },
+        {
+            "id": "8ee5402a-f1a4-4c83-9518-613afa70c461",
+            "brand": "Inferno",
+            "name": "Raptor",
+            "class": "Standard Class",
+            "type": "Sports Car",
+            "seats": "2",
+            "automatic": false,
+            "dailyRate": 167,
+            "imageURL": "8ee5402a-f1a4-4c83-9518-613afa70c461.jpg"
+        },
+        {
+            "id": "9dbfa517-311f-46b6-8c30-44b18276b6f7",
+            "brand": "Rustleaf",
+            "name": "Wandering Oak",
+            "class": "Compact Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 58,
+            "imageURL": "9dbfa517-311f-46b6-8c30-44b18276b6f7.jpg"
+        },
+        {
+            "id": "21c8748e-c347-4f90-8593-48a062c2e052",
+            "brand": "Nightfall",
+            "name": "Lantern Roamer",
+            "class": "Compact Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 77,
+            "imageURL": "21c8748e-c347-4f90-8593-48a062c2e052.jpg"
+        },
+        {
+            "id": "25e560d3-5584-4085-9bd4-d618ded9dc9c",
+            "brand": "Blaze",
+            "name": "Viperstrike",
+            "class": "Mid-Size-Car",
+            "type": "Sports Car",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 84,
+            "imageURL": "25e560d3-5584-4085-9bd4-d618ded9dc9c.jpg"
+        },
+        {
+            "id": "39b1e110-3701-40a8-ba13-dd16b9ce1333",
+            "brand": "Blaze",
+            "name": "Talon",
+            "class": "Mid-Size-Car",
+            "type": "Sports Car",
+            "seats": "2",
+            "automatic": true,
+            "dailyRate": 91,
+            "imageURL": "39b1e110-3701-40a8-ba13-dd16b9ce1333.jpg"
+        },
+        {
+            "id": "91a6e246-1591-478d-be34-43ce83d2117e",
+            "brand": "Crimson",
+            "name": "Voyager",
+            "class": "Compact Class",
+            "type": "Sedan",
+            "seats": "5",
+            "automatic": false,
+            "dailyRate": 73,
+            "imageURL": "91a6e246-1591-478d-be34-43ce83d2117e.jpg"
+        },
+        {
+            "id": "95df898d-1fcb-4cd0-98a1-97ddafa18885",
+            "brand": "Inferno",
+            "name": "Roguefire",
+            "class": "Upper Class",
+            "type": "Sports Car",
+            "seats": "2",
+            "automatic": true,
+            "dailyRate": 123,
+            "imageURL": "95df898d-1fcb-4cd0-98a1-97ddafa18885.jpg"
+        },
+        {
+            "id": "341f53d9-169c-4d13-b5c3-ed838d64dac5",
+            "brand": "Inferno",
+            "name": "Dragonwind",
+            "class": "Upper Class",
+            "type": "Sports Car",
+            "seats": "2",
+            "automatic": true,
+            "dailyRate": 187,
+            "imageURL": "341f53d9-169c-4d13-b5c3-ed838d64dac5.jpg"
+        },
+        {
+            "id": "1613c8c6-a5dd-408e-af19-1df5c4da43c2",
+            "brand": "Ironclad",
+            "name": "Trailblazer",
+            "class": "Compact Class",
+            "type": "Off-Road Vehicle",
+            "seats": "4",
+            "automatic": true,
+            "dailyRate": 153,
+            "imageURL": "1613c8c6-a5dd-408e-af19-1df5c4da43c2.jpg"
+        },
+        {
+            "id": "8979c6b1-f439-4e47-adba-aca652f9c11c",
+            "brand": "Ironclad",
+            "name": "Rockshard",
+            "class": "Upper Class",
+            "type": "Off-Road Vehicle",
+            "seats": "4",
+            "automatic": true,
+            "dailyRate": 197,
+            "imageURL": "8979c6b1-f439-4e47-adba-aca652f9c11c.jpg"
+        },
+        {
+            "id": "82623fd5-171b-41ca-9df4-4accc24b3c49",
+            "brand": "Inferno",
+            "name": "Viper",
+            "class": "Upper Class",
+            "type": "Sports Car",
+            "seats": "2",
+            "automatic": true,
+            "dailyRate": 196,
+            "imageURL": "82623fd5-171b-41ca-9df4-4accc24b3c49.jpg"
+        },
+        {
+            "id": "99807e35-8d19-40f8-bb57-6dbb82b69149",
+            "brand": "Rustleaf",
+            "name": "Duster",
+            "class": "Compact Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 87,
+            "imageURL": "99807e35-8d19-40f8-bb57-6dbb82b69149.jpg"
+        },
+        {
+            "id": "833059b7-f4d1-4837-b8af-9d3bc3a61742",
+            "brand": "Blaze",
+            "name": "Cannon",
+            "class": "Mid-Size-Car",
+            "type": "Sports Car",
+            "seats": "4",
+            "automatic": true,
+            "dailyRate": 163,
+            "imageURL": "833059b7-f4d1-4837-b8af-9d3bc3a61742.jpg"
+        },
+        {
+            "id": "a8dc050c-958e-4aa7-b900-33b9a1bae664",
+            "brand": "Celestial",
+            "name": "Noble-Coach",
+            "class": "Premium Class",
+            "type": "Limousine",
+            "seats": "8",
+            "automatic": true,
+            "dailyRate": 211,
+            "imageURL": "a8dc050c-958e-4aa7-b900-33b9a1bae664.jpg"
+        },
+        {
+            "id": "bc495a8d-9ff5-46fb-baa2-0b91966ba2c2",
+            "brand": "Tuckson",
+            "name": "Carrier",
+            "class": "Standard Class",
+            "type": "Pickup",
+            "seats": "2",
+            "automatic": false,
+            "dailyRate": 63,
+            "imageURL": "bc495a8d-9ff5-46fb-baa2-0b91966ba2c2.jpg"
+        },
+        {
+            "id": "c0a9e7f7-1728-499f-be0a-f6f084f47027",
+            "brand": "Ecto",
+            "name": "Ghoster",
+            "class": "Standard Class",
+            "type": "Sedan",
+            "seats": "5",
+            "automatic": false,
+            "dailyRate": 42,
+            "imageURL": "c0a9e7f7-1728-499f-be0a-f6f084f47027.jpg"
+        },
+        {
+            "id": "c6f1a682-5f35-4b3a-a9a9-4e54302014d3",
+            "brand": "Rustleaf",
+            "name": "Globetrotter",
+            "class": "Standard Class",
+            "type": "Station Wagon",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 71,
+            "imageURL": "c6f1a682-5f35-4b3a-a9a9-4e54302014d3.jpg"
+        },
+        {
+            "id": "de0a1b83-3e36-4b92-bc05-f36d958b0f7e",
+            "brand": "Celestial",
+            "name": "Travelking",
+            "class": "Premium Class",
+            "type": "Limousine",
+            "seats": "7",
+            "automatic": true,
+            "dailyRate": 188,
+            "imageURL": "de0a1b83-3e36-4b92-bc05-f36d958b0f7e.jpg"
+        },
+        {
+            "id": "e29b2416-66b5-488c-ad0a-e48f9094a7f2",
+            "brand": "Crimson",
+            "name": "Racing Cardboard",
+            "class": "Compact Class",
+            "type": "Sedan",
+            "seats": "4",
+            "automatic": false,
+            "dailyRate": 33,
+            "imageURL": "e29b2416-66b5-488c-ad0a-e48f9094a7f2.jpg"
+        },
+        {
+            "id": "e97f3fac-45f3-40fe-b781-73eecd1538fd",
+            "brand": "Celestial",
+            "name": "Bald Eagle",
+            "class": "Premium Class",
+            "type": "Limousine",
+            "seats": "6",
+            "automatic": true,
+            "dailyRate": 151,
+            "imageURL": "e97f3fac-45f3-40fe-b781-73eecd1538fd.jpg"
+        },
+        {
+            "id": "e740d081-35de-46a6-98cc-56fab236cfa3",
+            "brand": "Crimson",
+            "name": "3CV",
+            "class": "Compact Class",
+            "type": "Sedan",
+            "seats": "4",
+            "automatic": false,
+            "dailyRate": 32,
+            "imageURL": "e740d081-35de-46a6-98cc-56fab236cfa3.jpg"
+        },
+        {
+            "id": "f96549fa-e27d-428a-a42d-8ad486aebad3",
+            "brand": "Ecto",
+            "name": "Firehorse",
+            "class": "Compact Class",
+            "type": "Sedan",
+            "seats": "4",
+            "automatic": false,
+            "dailyRate": 32,
+            "imageURL": "f96549fa-e27d-428a-a42d-8ad486aebad3.jpg"
+        },
+        {
+            "id": "fc89d32c-ceb2-4fe9-b655-6f0eeaf4fa7b",
+            "brand": "Ironclad",
+            "name": "Moonlight",
+            "class": "Mid-Size-Car",
+            "type": "Off-Road Vehicle",
+            "seats": "5",
+            "automatic": true,
+            "dailyRate": 101,
+            "imageURL": "fc89d32c-ceb2-4fe9-b655-6f0eeaf4fa7b.jpg"
+        }
+    ],
+    "users": [
+        {
+            "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+            "email": "danieldeskclerk@example.com",
+            "firstName": "Daniel",
+            "lastName": "Deskclerk",
+            "dateOfBirth": "2000-01-13",
+            "driversLicense": "F352GGE4711",
+            "address": {
+                "street": "Garrison Ave",
+                "houseNumber": "54",
+                "zipCode": "NJ 07306",
+                "locality": "Jersey City"
+            }
+        }
+    ],
+    "auth": [
+        {
+            "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+            "password": "$2a$10$3vHJMxWUCFcN/bjE4KSane1ui3bpDpuNYfxDvnZdOcFXD9zxtIc3m"
+        }
+    ],
+    "options": [
+        {
+            "id": "901c3cd0-8619-4259-a51b-0c994f986833",
+            "name": "Low Mileage",
+            "text": "Includes 250 kilometers a day (0,92 ct per additional kilometer).",
+            "price": 0
+        },
+        {
+            "id": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+            "name": "Frequent Drivers",
+            "text": "Includes 1250 kilometers a day (0,63 ct per additional kilometer).",
+            "price": 18.65
+        },
+        {
+            "id": "1590d19d-833f-4c69-a604-9ce3c0c58527",
+            "name": "All inclusive",
+            "text": "Unlimited kilometers for those you want to travel far.",
+            "price": 126.30
+        },
+        {
+            "id": "a58e5932-3356-4151-966f-ff4b536b1d5f",
+            "name": "Luxury",
+            "text": "The realy all inclusive package including a driver (limousines only).",
+            "price": 126.30
+        }
+    ],
+    "insurance": [
+        {
+            "id": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+            "name": "No insurance",
+            "text": "Excess up to the value of the vehicle",
+            "price": 0
+        },
+        {
+            "id": "8164aff9-4621-4c9b-a882-b95d54547c0f",
+            "name": "Basic insurance",
+            "text": "Excess up to 2.000 €",
+            "price": 8.40
+        },
+        {
+            "id": "b63aecc9-1e5c-44ec-8337-3919c7f6f012",
+            "name": "Smart insurance",
+            "text": "The insurance provides full cover without a deductible.",
+            "price": 14.71
+        },
+        {
+            "id": "2c51ef95-173b-4e72-9a32-e7c13c361353",
+            "name": "Fits all needs insurance",
+            "text": "The insurance provides full cover without a deductible including mobility service.",
+            "price": 26.87
+        }
+    ],
+    "bookings": []
+}

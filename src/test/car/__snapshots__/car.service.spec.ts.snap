@@ -1,0 +1,100 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`car.service > getCar > returns > a car identified by a given id. 1`] = `
+{
+  "automatic": false,
+  "brand": "Rustleaf",
+  "class": "Compact Class",
+  "dailyRate": 80,
+  "id": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37",
+  "imageURL": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37.jpg",
+  "name": "Traveler",
+  "seats": "5",
+  "type": "Station Wagon",
+}
+`;
+
+exports[`car.service > listCars > returns > a list of all cars. 1`] = `
+[
+  {
+    "automatic": false,
+    "brand": "Rustleaf",
+    "class": "Compact Class",
+    "dailyRate": 80,
+    "id": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37",
+    "imageURL": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37.jpg",
+    "name": "Traveler",
+    "seats": "5",
+    "type": "Station Wagon",
+  },
+  {
+    "automatic": true,
+    "brand": "Nightfall",
+    "class": "Compact Class",
+    "dailyRate": 94,
+    "id": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+    "imageURL": "4ec570ea-3afd-4fad-af60-dad23d4c7d37.jpg",
+    "name": "Rambler",
+    "seats": "5",
+    "type": "Station Wagon",
+  },
+]
+`;
+
+exports[`car.service > listInsurances > returns > a list of available insurances. 1`] = `
+[
+  {
+    "id": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+    "name": "No insurance",
+    "price": 0,
+    "text": "Excess up to the value of the vehicle",
+  },
+  {
+    "id": "8164aff9-4621-4c9b-a882-b95d54547c0f",
+    "name": "Basic insurance",
+    "price": 8.4,
+    "text": "Excess up to 2.000 €",
+  },
+  {
+    "id": "b63aecc9-1e5c-44ec-8337-3919c7f6f012",
+    "name": "Smart insurance",
+    "price": 14.71,
+    "text": "The insurance provides full cover without a deductible.",
+  },
+  {
+    "id": "2c51ef95-173b-4e72-9a32-e7c13c361353",
+    "name": "Fits all needs insurance",
+    "price": 26.87,
+    "text": "The insurance provides full cover without a deductible including mobility service.",
+  },
+]
+`;
+
+exports[`car.service > listOptions > returns > a list of available options. 1`] = `
+[
+  {
+    "id": "901c3cd0-8619-4259-a51b-0c994f986833",
+    "name": "Low Mileage",
+    "price": 0,
+    "text": "Includes 250 kilometers a day (0,92 ct per additional kilometer).",
+  },
+  {
+    "id": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+    "name": "Frequent Drivers",
+    "price": 18.65,
+    "text": "Includes 1250 kilometers a day (0,63 ct per additional kilometer).",
+  },
+  {
+    "id": "1590d19d-833f-4c69-a604-9ce3c0c58527",
+    "name": "All inclusive",
+    "price": 126.3,
+    "text": "Unlimited kilometers for those you want to travel far.",
+  },
+  {
+    "id": "a58e5932-3356-4151-966f-ff4b536b1d5f",
+    "name": "Luxury",
+    "price": 126.3,
+    "text": "The realy all inclusive package including a driver (limousines only).",
+  },
+]
+`;

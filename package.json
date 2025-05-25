@@ -1,0 +1,54 @@
+{
+    "name": "rent-a-car",
+    "version": "1.0.0",
+    "description": "A Node.js / Express.js based example REST API for a Rent-A-Car app.",
+    "packageManager": "pnpm@9.15.0",
+    "type": "module",
+    "main": "src/main.ts",
+    "scripts": {
+        "dev": "nodemon -r tsconfig-paths/register -x tsx src/main.ts",
+        "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+        "test": "vitest"
+    },
+    "author": "Crasyhorse",
+    "license": "MIT",
+    "engines": {
+        "node": ">= 18"
+    },
+    "devDependencies": {
+        "@eslint/compat": "^1.2.4",
+        "@eslint/js": "^9.16.0",
+        "@tsconfig/node20": "^20.1.4",
+        "@types/body-parser": "^1.19.5",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^5.0.0",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^20.16",
+        "eslint": "^9.16.0",
+        "eslint-config-prettier": "^9.1.0",
+        "nodemon": "^3.1.7",
+        "npm-run-all2": "^7.0.1",
+        "prettier": "^3.4.2",
+        "tsc-alias": "^1.8.10",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2",
+        "typescript-eslint": "^8.17.0",
+        "vite": "^6.0.6",
+        "vitest": "^2.1.8"
+    },
+    "dependencies": {
+        "@types/bcryptjs": "^2.4.6",
+        "@types/jsonwebtoken": "^9.0.7",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.3",
+        "cors": "^2.8.5",
+        "date-fns": "^4.1.0",
+        "dotenv": "^16.4.7",
+        "express": "^5.0.1",
+        "express-jwt": "^8.5.1",
+        "jsonata": "^2.0.6",
+        "jsonwebtoken": "^9.0.2",
+        "morgan": "^1.10.0",
+        "tsconfig-paths": "^4.2.0"
+    }
+}

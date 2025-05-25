@@ -1,0 +1,5 @@
+**/package-lock.json
+**/*.min.css
+.devcontainer/devcontainer.json
+pnpm-lock.yaml
+**/.vscode/*

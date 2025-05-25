@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`opiton.repository > getOptions > returns > the list of all options. 1`] = `
+[
+  {
+    "id": "901c3cd0-8619-4259-a51b-0c994f986833",
+    "name": "Low Mileage",
+    "price": 0,
+    "text": "Includes 250 kilometers a day (0,92 ct per additional kilometer).",
+  },
+  {
+    "id": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+    "name": "Frequent Drivers",
+    "price": 18.65,
+    "text": "Includes 1250 kilometers a day (0,63 ct per additional kilometer).",
+  },
+  {
+    "id": "1590d19d-833f-4c69-a604-9ce3c0c58527",
+    "name": "All inclusive",
+    "price": 126.3,
+    "text": "Unlimited kilometers for those you want to travel far.",
+  },
+  {
+    "id": "a58e5932-3356-4151-966f-ff4b536b1d5f",
+    "name": "Luxury",
+    "price": 126.3,
+    "text": "The realy all inclusive package including a driver (limousines only).",
+  },
+]
+`;

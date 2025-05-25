@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`insurance.repository > getInsurances > returns > the list of all insurances. 1`] = `
+[
+  {
+    "id": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+    "name": "No insurance",
+    "price": 0,
+    "text": "Excess up to the value of the vehicle",
+  },
+  {
+    "id": "8164aff9-4621-4c9b-a882-b95d54547c0f",
+    "name": "Basic insurance",
+    "price": 8.4,
+    "text": "Excess up to 2.000 €",
+  },
+  {
+    "id": "b63aecc9-1e5c-44ec-8337-3919c7f6f012",
+    "name": "Smart insurance",
+    "price": 14.71,
+    "text": "The insurance provides full cover without a deductible.",
+  },
+  {
+    "id": "2c51ef95-173b-4e72-9a32-e7c13c361353",
+    "name": "Fits all needs insurance",
+    "price": 26.87,
+    "text": "The insurance provides full cover without a deductible including mobility service.",
+  },
+]
+`;

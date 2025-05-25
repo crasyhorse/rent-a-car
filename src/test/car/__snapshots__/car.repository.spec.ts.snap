@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`car.repository > getCarById > returns > the car identified by '2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37' 1`] = `
+{
+  "automatic": false,
+  "brand": "Rustleaf",
+  "class": "Compact Class",
+  "dailyRate": 80,
+  "id": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37",
+  "imageURL": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37.jpg",
+  "name": "Traveler",
+  "seats": "5",
+  "type": "Station Wagon",
+}
+`;
+
+exports[`car.repository > getCars > returns > a list of cars. 1`] = `
+[
+  {
+    "automatic": false,
+    "brand": "Rustleaf",
+    "class": "Compact Class",
+    "dailyRate": 80,
+    "id": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37",
+    "imageURL": "2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37.jpg",
+    "name": "Traveler",
+    "seats": "5",
+    "type": "Station Wagon",
+  },
+  {
+    "automatic": true,
+    "brand": "Nightfall",
+    "class": "Compact Class",
+    "dailyRate": 94,
+    "id": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+    "imageURL": "4ec570ea-3afd-4fad-af60-dad23d4c7d37.jpg",
+    "name": "Rambler",
+    "seats": "5",
+    "type": "Station Wagon",
+  },
+]
+`;
