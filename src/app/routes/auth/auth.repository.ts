@@ -29,6 +29,14 @@ const getUserByEmail = async (email: string): Promise<User | undefined> => {
     return user;
 };
 
+const getUserById = async (userId: User["id"]): Promise<User | undefined> => {
+    const data: Database = await readDatabase();
+    const expression = jsonata(`users[id="${userId}"]`);
+    const user: Promise<User | undefined> = expression.evaluate(data);
+
+    return user;
+};
+
 const getPasswordById = async (userId: string): Promise<string | undefined> => {
     const data: Database = await readDatabase();
     const expression = jsonata(`auth[id="${userId}"].password`);
@@ -108,6 +116,7 @@ const updateUser = async (user: User): Promise<User> => {
 export {
     createAuthData,
     getUserByEmail,
+    getUserById,
     getPasswordById,
     mergeUser,
     userIsUnique
