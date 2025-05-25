@@ -39,6 +39,20 @@
             }
         },
         {
+            "id": "064613d2-1698-49a7-87dd-2cfb03ad35c5",
+            "email": "hannahappy@example.com",
+            "firstName": "Hanna",
+            "lastName": "Happy",
+            "dateOfBirth": "2003-05-27",
+            "driversLicense": "G471GXS0815",
+            "address": {
+                "street": "Corbin Ave",
+                "houseNumber": "30",
+                "zipCode": "NJ 07306",
+                "locality": "Jersey City"
+            }
+        },
+        {
             "id": "5e7b3820-e71f-4af1-bcfe-6bde1f20df5e",
             "email": "missingauth@example.com",
             "firstName": "Missing",
@@ -57,6 +71,14 @@
         {
             "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
             "password": "$2a$10$3vHJMxWUCFcN/bjE4KSane1ui3bpDpuNYfxDvnZdOcFXD9zxtIc3m"
+        },
+        {
+            "id": "064613d2-1698-49a7-87dd-2cfb03ad35c5",
+            "password": "$2a$10$3vHJMxWUCFcN/bjE4KSane1ui3bpDpuNYfxDvnZdOcFXD9zxtIc3m"
+        },
+        {
+            "id": "3cdfc529-4451-4efa-b8b2-c84c3c210cc5",
+            "password": "$2a$10$OlP51FuJPRE8kfbPPeFFuOPyAtoiLe.pTu6tcAdxaE9pS5CymsJnO"
         }
     ],
     "options": [
