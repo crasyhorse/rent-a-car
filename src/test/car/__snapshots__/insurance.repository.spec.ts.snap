@@ -1,5 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`insurance.repository > getInsuranceById > returns > the insurance identified by '8164aff9-4621-4c9b-a882-b95d54547c0f' 1`] = `
+{
+  "id": "8164aff9-4621-4c9b-a882-b95d54547c0f",
+  "name": "Basic insurance",
+  "price": 8.4,
+  "text": "Excess up to 2.000 €",
+}
+`;
+
 exports[`insurance.repository > getInsurances > returns > the list of all insurances. 1`] = `
 [
   {

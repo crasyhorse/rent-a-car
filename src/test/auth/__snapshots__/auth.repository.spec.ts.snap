@@ -16,3 +16,5 @@ exports[`auth.repository > getUserByEmail > returns > an authenticated user. 1`]
   "lastName": "Deskclerk",
 }
 `;
+
+exports[`auth.repository > getUserById > returns > an authenticated user. 1`] = `undefined`;

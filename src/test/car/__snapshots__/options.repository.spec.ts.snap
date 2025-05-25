@@ -1,5 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`opiton.repository > getOptionById > returns > the option identified by '13744176-67c5-4f9e-bf01-204dd95ba3e5' 1`] = `
+{
+  "id": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+  "name": "Frequent Drivers",
+  "price": 18.65,
+  "text": "Includes 1250 kilometers a day (0,63 ct per additional kilometer).",
+}
+`;
+
 exports[`opiton.repository > getOptions > returns > the list of all options. 1`] = `
 [
   {

@@ -7,6 +7,34 @@ exports[`db > readDatabase > returns > the contents of the database. 1`] = `
       "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
       "password": "$2a$10$3vHJMxWUCFcN/bjE4KSane1ui3bpDpuNYfxDvnZdOcFXD9zxtIc3m",
     },
+    {
+      "id": "064613d2-1698-49a7-87dd-2cfb03ad35c5",
+      "password": "$2a$10$3vHJMxWUCFcN/bjE4KSane1ui3bpDpuNYfxDvnZdOcFXD9zxtIc3m",
+    },
+    {
+      "id": "3cdfc529-4451-4efa-b8b2-c84c3c210cc5",
+      "password": "$2a$10$OlP51FuJPRE8kfbPPeFFuOPyAtoiLe.pTu6tcAdxaE9pS5CymsJnO",
+    },
+  ],
+  "bookings": [
+    {
+      "carId": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+      "endDate": "2025-01-25T19:00:00.000Z",
+      "insuranceId": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+      "optionId": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+      "price": 901.2,
+      "startDate": "2025-01-18T12:00:00.000Z",
+      "userId": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+    },
+    {
+      "carId": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+      "endDate": "2025-02-04T12:00:00.000Z",
+      "insuranceId": "b63aecc9-1e5c-44ec-8337-3919c7f6f012",
+      "optionId": "901c3cd0-8619-4259-a51b-0c994f986833",
+      "price": 326.13,
+      "startDate": "2025-02-02T12:00:00.000Z",
+      "userId": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+    },
   ],
   "cars": [
     {
@@ -32,7 +60,7 @@ exports[`db > readDatabase > returns > the contents of the database. 1`] = `
       "type": "Station Wagon",
     },
   ],
-  "insurance": [
+  "insurances": [
     {
       "id": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
       "name": "No insurance",
@@ -98,6 +126,20 @@ exports[`db > readDatabase > returns > the contents of the database. 1`] = `
       "firstName": "Daniel",
       "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
       "lastName": "Deskclerk",
+    },
+    {
+      "address": {
+        "houseNumber": "30",
+        "locality": "Jersey City",
+        "street": "Corbin Ave",
+        "zipCode": "NJ 07306",
+      },
+      "dateOfBirth": "2003-05-27",
+      "driversLicense": "G471GXS0815",
+      "email": "hannahappy@example.com",
+      "firstName": "Hanna",
+      "id": "064613d2-1698-49a7-87dd-2cfb03ad35c5",
+      "lastName": "Happy",
     },
     {
       "address": {
