@@ -1,32 +1,114 @@
 import { BookingDataInput } from '@/db/booking-data-input.model';
-import { BookingData } from '@/db/BookingData';
+import { BookingData } from '@/db/booking-data';
 import { Car } from '@/db/car.model';
+import { Insurance } from '@/db/insurance.model';
+import { Option } from '@/db/option.model';
 import { getBookingsByCarId } from '@/app/routes/booking/booking.repositroy';
-import { areIntervalsOverlapping } from 'date-fns';
 import HttpException from '@/app/models/HttpException';
+import { createBooking } from '@/app/routes/booking/booking.repositroy';
+import { getUserById } from '@/app/routes/auth/auth.repository';
+import { getCarById } from '@/app/routes/cars/car.repository';
+import { getInsuranceById } from '../cars/insurance.repository';
+import { getOptionById } from '../cars/opiton.repository';
+import { areIntervalsOverlapping } from 'date-fns';
+import { intervalToDuration } from 'date-fns';
 
 const executeBooking = async (
-    bookingData: BookingDataInput
+    bookingInput: BookingDataInput
 ): Promise<BookingData | never> => {
-    const { startDate, endDate } = bookingData;
+    const { startDate, endDate } = bookingInput;
 
-    if (await carIsAlreadyBooked(bookingData.car, startDate, endDate)) {
+    if (await carIsAlreadyBooked(bookingInput.carId, startDate, endDate)) {
         throw new HttpException(
             403,
-            'This car has alread been booked in this period!'
+            'This car has already been booked in this period!'
         );
     }
 
-    return {};
+    const user = await getUserById(bookingInput.userId);
+    if (!user) {
+        throw new HttpException(
+            422,
+            'Wrong user id. The user could not be found.'
+        );
+    }
+
+    const car = await getCarById(bookingInput.carId);
+    if (!car) {
+        throw new HttpException(
+            422,
+            'Wrong car id. The car could not be found.'
+        );
+    }
+
+    const insurance = await getInsuranceById(bookingInput.insuranceId);
+    if (!insurance) {
+        throw new HttpException(
+            422,
+            'Wrong insurance id. The insurance could not be found.'
+        );
+    }
+
+    const option = await getOptionById(bookingInput.optionId);
+    if (!option) {
+        throw new HttpException(
+            422,
+            'Wrong option id. The option could not be found.'
+        );
+    }
+
+    const price = calculatePrice(startDate, endDate, car, insurance, option);
+    if (!price) {
+        throw new HttpException(
+            422,
+            'Could not calculate price. The booking data seams to be wrong.'
+        );
+    }
+
+    const bookingData: BookingData = {
+        user,
+        car,
+        startDate,
+        endDate,
+        insurance,
+        option,
+        price: price.toFixed(2)
+    };
+
+    await createBooking({ ...bookingInput, price: price });
+
+    return bookingData;
 };
 
-const carIsAlreadyBooked = async (
+const calculatePrice = (
+    startDate: Date,
+    endDate: Date,
     car: Car,
+    insurance: Insurance,
+    option: Option
+): number | null => {
+    const days = intervalToDuration({
+        start: startDate,
+        end: endDate
+    }).days;
+
+    if (!days) {
+        return null;
+    }
+
+    return days * car.dailyRate + insurance.price + option.price;
+};
+
+// TODO
+const cancleBooking = () => {
+
+}
+
+const carIsAlreadyBooked = async (
+    carId: Car['id'],
     startDate: Date,
     endDate: Date
 ): Promise<boolean> => {
-    const carId = car.id;
-
     const bookings = await getBookingsByCarId(carId);
 
     const isBooked = bookings.some((booking) =>
