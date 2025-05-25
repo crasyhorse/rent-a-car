@@ -7,10 +7,19 @@ const getOptions = async (): Promise<Option[] | undefined> => {
     const data: Database = await readDatabase();
 
     const expression = jsonata('options');
-    const options: Promise<Option[] | undefined> =
-        expression.evaluate(data);
+    const options: Promise<Option[] | undefined> = expression.evaluate(data);
 
     return options;
 };
 
-export { getOptions };
+const getOptionById = async (id: Option['id']): Promise<Option | undefined> => {
+    const data: Database = await readDatabase();
+
+    const expression = jsonata(`options[id="${id}"]`);
+    const insurance: Promise<Option | undefined> = expression.evaluate(data);
+
+    return insurance;
+};
+
+export { getOptionById, getOptions };
+
