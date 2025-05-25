@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
     getUserByEmail,
+    getUserById,
     getPasswordById,
     mergeUser
 } from '@/app/routes/auth/auth.repository';
@@ -22,6 +23,22 @@ describe('auth.repository', () => {
             it('undefined if the user does not exist.', async () => {
                 await expect(
                     getUserByEmail('nonexistinguser@example.com')
+                ).resolves.toBeUndefined();
+            });
+        });
+    });
+
+    describe('getUserById', () => {
+        describe('returns', () => {
+            it('an authenticated user.', async () => {
+                await expect(
+                    getUserById('danieldeskclerk@example.com')
+                ).resolves.toMatchSnapshot();
+            });
+
+            it('undefined if the user does not exist.', async () => {
+                await expect(
+                    getUserById('danieldeskclerk@example.com')
                 ).resolves.toBeUndefined();
             });
         });
