@@ -8,7 +8,7 @@ import { RegisterInput } from './register-input.model';
 import { AuthData } from '@/db/auth-data.model';
 import * as bcrypt from 'bcryptjs';
 
-const createAuthData = async (user: User, password: string) => {
+const createAuthData = async (user: User, password: string): Promise<void> => {
     const data: Database = await readDatabase();
 
     const authData: AuthData = {
