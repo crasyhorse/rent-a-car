@@ -1,5 +1,4 @@
 import { NextFunction, Response, Request, Router } from 'express';
-import authorizationHandler from '@/app/middleware/authorizationHandler.js';
 import { login, register } from '@/app/routes/auth/auth.service.js';
 
 const router = Router();
