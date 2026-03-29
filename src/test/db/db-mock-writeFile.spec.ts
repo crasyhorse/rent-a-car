@@ -24,7 +24,10 @@ describe('db', () => {
                 const data: Database = {
                     cars: [],
                     users: [],
-                    auth: []
+                    auth: [],
+                    bookings: [],
+                    insurance: [],
+                    options: []
                 };
 
                 await expect(writeDatabase(data)).rejects.toThrow();
@@ -32,4 +35,3 @@ describe('db', () => {
         });
     });
 });
-
