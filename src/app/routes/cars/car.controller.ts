@@ -10,19 +10,6 @@ import {
 const router = Router();
 
 router.get(
-    '/cars/:id',
-    authHandler.optional,
-    async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const result = await getCar(req.params.id);
-            res.json(result);
-        } catch (error) {
-            next(error);
-        }
-    }
-);
-
-router.get(
     '/cars/',
     authHandler.optional,
     async (_req: Request, res: Response, next: NextFunction) => {
@@ -49,6 +36,23 @@ router.get(
 );
 
 router.get(
+    '/cars/:id',
+    authHandler.optional,
+    async (
+        req: Request<{ id: string }>,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const result = await getCar(req.params.id);
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+router.get(
     '/cars/options',
     authHandler.optional,
     async (_req: Request, res: Response, next: NextFunction) => {
@@ -62,4 +66,3 @@ router.get(
 );
 
 export default router;
-
