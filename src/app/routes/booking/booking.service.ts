@@ -96,10 +96,11 @@ const calculatePrice = (
     insurance: Insurance,
     option: Option
 ): number | null => {
-    const days = intervalToDuration({
+    const duration = intervalToDuration({
         start: startDate,
         end: endDate
-    }).days;
+    });
+    const days = duration.days ?? 0;
 
     if (!days) {
         return null;
@@ -136,4 +137,3 @@ const carIsAlreadyBooked = async (
     return isBooked;
 };
 export { executeBooking };
-
