@@ -16,7 +16,16 @@ import { intervalToDuration } from 'date-fns';
 const executeBooking = async (
     bookingInput: BookingDataInput
 ): Promise<BookingData | never> => {
-    const { startDate, endDate } = bookingInput;
+    const startDate = new Date(bookingInput.startDate);
+    const endDate = new Date(bookingInput.endDate);
+
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+        throw new HttpException(422, 'Start date or end date is invalid.');
+    }
+
+    if (startDate >= endDate) {
+        throw new HttpException(422, 'Start date must be before end date.');
+    }
 
     if (await carIsAlreadyBooked(bookingInput.carId, startDate, endDate)) {
         throw new HttpException(
