@@ -103,7 +103,86 @@ describe('booking.service', () => {
                     expected403Error
                 );
             });
+
+            it('if startDate is invalid.', async () => {
+                const booking: BookingDataInput = {
+                    userId: '064613d2-1698-49a7-87dd-2cfb03ad35c5',
+                    carId: '2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37',
+                    startDate: new Date('invalid-date'),
+                    endDate: new Date('2025-01-05T19:00:00'),
+                    insuranceId: '8164aff9-4621-4c9b-a882-b95d54547c0f',
+                    optionId: '13744176-67c5-4f9e-bf01-204dd95ba3e5'
+                };
+
+                const expected422Error = new HttpException(
+                    422,
+                    'Start date or end date is invalid.'
+                );
+
+                await expect(executeBooking(booking)).rejects.toThrowError(
+                    expected422Error
+                );
+            });
+
+            it('if startDate is after endDate.', async () => {
+                const booking: BookingDataInput = {
+                    userId: '064613d2-1698-49a7-87dd-2cfb03ad35c5',
+                    carId: '2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37',
+                    startDate: new Date('2025-01-10T12:00:00'),
+                    endDate: new Date('2025-01-05T19:00:00'),
+                    insuranceId: '8164aff9-4621-4c9b-a882-b95d54547c0f',
+                    optionId: '13744176-67c5-4f9e-bf01-204dd95ba3e5'
+                };
+
+                const expected422Error = new HttpException(
+                    422,
+                    'Start date must be before end date.'
+                );
+
+                await expect(executeBooking(booking)).rejects.toThrowError(
+                    expected422Error
+                );
+            });
+
+            it('if the user does not exist.', async () => {
+                const booking: BookingDataInput = {
+                    userId: 'non-existing-user-id',
+                    carId: '2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37',
+                    startDate: new Date('2025-01-02T12:00:00'),
+                    endDate: new Date('2025-01-05T19:00:00'),
+                    insuranceId: '8164aff9-4621-4c9b-a882-b95d54547c0f',
+                    optionId: '13744176-67c5-4f9e-bf01-204dd95ba3e5'
+                };
+
+                const expected422Error = new HttpException(
+                    422,
+                    'Wrong user id. The user could not be found.'
+                );
+
+                await expect(executeBooking(booking)).rejects.toThrowError(
+                    expected422Error
+                );
+            });
+
+            it('if the insurance does not exist.', async () => {
+                const booking: BookingDataInput = {
+                    userId: '064613d2-1698-49a7-87dd-2cfb03ad35c5',
+                    carId: '2e9d49ac-ec6f-41e5-b04a-f7b58cb08d37',
+                    startDate: new Date('2025-01-02T12:00:00'),
+                    endDate: new Date('2025-01-05T19:00:00'),
+                    insuranceId: 'non-existing-insurance-id',
+                    optionId: '13744176-67c5-4f9e-bf01-204dd95ba3e5'
+                };
+
+                const expected422Error = new HttpException(
+                    422,
+                    'Wrong insurance id. The insurance could not be found.'
+                );
+
+                await expect(executeBooking(booking)).rejects.toThrowError(
+                    expected422Error
+                );
+            });
         });
     });
 });
-
