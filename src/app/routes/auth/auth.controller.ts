@@ -4,6 +4,18 @@ import { RegisterInput } from '@/app/routes/auth/register-input.model';
 import { LoginInput } from '@/app/routes/auth/login-input.model';
 
 const router = Router();
+const AUTH_COOKIE_NAME = 'access_token';
+const AUTH_TOKEN_MAX_AGE_MS = 60 * 60 * 1000;
+
+const attachAuthCookie = (res: Response, token: string) => {
+    res.cookie(AUTH_COOKIE_NAME, token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: AUTH_TOKEN_MAX_AGE_MS,
+        path: '/'
+    });
+};
 
 router.post(
     '/auth/register',
@@ -14,7 +26,9 @@ router.post(
     ) => {
         try {
             const user = await register(req.body.user);
-            res.status(201).json(user);
+            attachAuthCookie(res, user.token);
+            const { token, ...safeUser } = user;
+            res.status(201).json(safeUser);
         } catch (error) {
             next(error);
         }
@@ -30,7 +44,9 @@ router.post(
     ) => {
         try {
             const user = await login(req.body.user);
-            res.status(200).json(user);
+            attachAuthCookie(res, user.token);
+            const { token, ...safeUser } = user;
+            res.status(200).json(safeUser);
         } catch (error) {
             next(error);
         }

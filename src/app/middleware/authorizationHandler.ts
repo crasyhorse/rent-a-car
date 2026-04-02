@@ -13,18 +13,22 @@ interface JwtOptions {
 const extractAuthTokenFromRequest: TokenGetter = (
     req: Request
 ): string | Promise<string> | undefined => {
-    let token;
+    const cookies = req.headers?.cookie;
 
-    const authHeader = req.headers?.authorization;
-    if (authHeader && ['Token', 'Bearer'].includes(authHeader.split(' ')[0])) {
-        token = authHeader.split(' ')[1];
+    if (!cookies) {
+        return undefined;
     }
 
-    if (req.query && req.query.token) {
-        token = String(req.query.token);
+    const tokenCookie = cookies
+        .split(';')
+        .map((cookie) => cookie.trim())
+        .find((cookie) => cookie.startsWith('access_token='));
+
+    if (!tokenCookie) {
+        return undefined;
     }
 
-    return token;
+    return decodeURIComponent(tokenCookie.split('=')[1]);
 };
 
 const jwtOptions: JwtOptions = {

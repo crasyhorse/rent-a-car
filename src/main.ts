@@ -11,7 +11,12 @@ import routes from '@/app/lib/boot.js';
 const app = express();
 const { json, urlencoded } = bodyParser.default;
 
-app.use(cors());
+app.use(
+    cors({
+        origin: process.env.CORS_ORIGIN ?? true,
+        credentials: true
+    })
+);
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(routes);
@@ -36,4 +41,3 @@ const server = app.listen(port, '0.0.0.0', () => {
 
     console.log(`Rent-A-Car API listens on port ${port}.`);
 });
-
