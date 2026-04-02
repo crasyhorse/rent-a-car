@@ -14,10 +14,22 @@ router.post(
         next: NextFunction
     ) => {
         try {
+            const authUserId = (req as Request & { auth?: { id?: string } }).auth
+                ?.id;
+
             if (req.params.customerId !== req.body.data?.userId) {
                 res.status(422).json({
                     status: 422,
                     message: 'Customer id in path does not match payload user id.'
+                });
+
+                return;
+            }
+
+            if (authUserId && req.params.customerId !== authUserId) {
+                res.status(403).json({
+                    status: 403,
+                    message: 'Forbidden. You can only create bookings for yourself.'
                 });
 
                 return;

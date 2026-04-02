@@ -15,8 +15,9 @@ const extractAuthTokenFromRequest: TokenGetter = (
 ): string | Promise<string> | undefined => {
     let token;
 
-    if (req.auth && ['Token', 'Bearer'].includes(req.auth.split(' ')[0])) {
-        token = req.auth.split(' ')[1];
+    const authHeader = req.headers?.authorization;
+    if (authHeader && ['Token', 'Bearer'].includes(authHeader.split(' ')[0])) {
+        token = authHeader.split(' ')[1];
     }
 
     if (req.query && req.query.token) {
@@ -38,4 +39,3 @@ const authHandler = {
 };
 
 export default authHandler;
-
