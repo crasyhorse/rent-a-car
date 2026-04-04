@@ -18,8 +18,8 @@ const attachAuthCookie = (response: Response, token: string) => {
 router.post(
     '/auth/register',
     async (
-        req: Request<unknown, unknown, { user: RegisterInput }>,
-        res: Response,
+        request: Request<unknown, unknown, { user: RegisterInput }>,
+        response: Response,
         next: NextFunction
     ) => {
         try {
@@ -34,8 +34,8 @@ router.post(
 router.post(
     '/auth/login',
     async (
-        req: Request<unknown, unknown, { user: LoginInput }>,
-        res: Response,
+        request: Request<unknown, unknown, { user: LoginInput }>,
+        response: Response,
         next: NextFunction
     ) => {
         try {
