@@ -1,7 +1,6 @@
+import type { GetVerificationKey, Request, TokenGetter } from 'express-jwt';
 import { expressjwt as jwt } from 'express-jwt';
-import type { Request } from 'express-jwt';
-import type { GetVerificationKey, TokenGetter } from 'express-jwt';
-import type { Secret, Algorithm } from 'jsonwebtoken';
+import type { Algorithm, Secret } from 'jsonwebtoken';
 
 interface JwtOptions {
     secret: Secret | GetVerificationKey;
