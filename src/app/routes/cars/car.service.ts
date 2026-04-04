@@ -1,7 +1,7 @@
 import HttpException from '@/app/models/HttpException';
 import { getCarById, getCars } from '@/app/routes/cars/car.repository';
 import { getInsurances } from '@/app/routes/cars/insurance.repository';
-import { getOptions } from '@/app/routes/cars/opiton.repository';
+import { getOptions } from '@/app/routes/cars/option.repository';
 
 const getCar = async (id: string) => {
     const car = await getCarById(id);
@@ -39,7 +39,7 @@ const listInsurances = async () => {
 const listOptions = async () => {
     const options = await getOptions();
 
-    if (options?.length === 0) {
+    if (options.length === 0) {
         throw new HttpException(404, 'Could not find any bookable options!');
     }
 
