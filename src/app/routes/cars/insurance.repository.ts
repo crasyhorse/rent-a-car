@@ -1,7 +1,7 @@
-import { readDatabase } from '@/db/db';
-import jsonata from 'jsonata';
 import type { Database } from '@/db/database.model';
+import { readDatabase } from '@/db/db';
 import type { Insurance } from '@/db/insurance.model';
+import jsonata from 'jsonata';
 
 const getInsurances = async (): Promise<Insurance[] | undefined> => {
     const data: Database = await readDatabase();

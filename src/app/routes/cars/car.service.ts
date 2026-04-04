@@ -1,7 +1,7 @@
-import HttpException from '@/app/models/HttpException.js';
-import { getCarById, getCars } from '@/app/routes/cars/car.repository.js';
-import { getInsurances } from '@/app/routes/cars/insurance.repository.js';
-import { getOptions } from '@/app/routes/cars/opiton.repository.js';
+import HttpException from '@/app/models/HttpException';
+import { getCarById, getCars } from '@/app/routes/cars/car.repository';
+import { getInsurances } from '@/app/routes/cars/insurance.repository';
+import { getOptions } from '@/app/routes/cars/opiton.repository';
 
 const getCar = async (id: string) => {
     const car = await getCarById(id);

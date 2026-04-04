@@ -1,4 +1,3 @@
-import { NextFunction, Response, Request, Router } from 'express';
 import authHandler from '@/app/middleware/authorizationHandler';
 import {
     getCar,
@@ -6,6 +5,7 @@ import {
     listInsurances,
     listOptions
 } from '@/app/routes/cars/car.service';
+import { NextFunction, Request, Response, Router } from 'express';
 
 const router = Router();
 

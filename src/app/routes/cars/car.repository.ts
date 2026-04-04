@@ -1,7 +1,7 @@
+import type { Car } from '@/db/car.model';
+import type { Database } from '@/db/database.model';
 import { readDatabase } from '@/db/db';
 import jsonata from 'jsonata';
-import type { Database } from '@/db/database.model';
-import type { Car } from '@/db/car.model';
 
 const getCarById = async (id: Car["id"]): Promise<Car | undefined> => {
     const data: Database = await readDatabase();
