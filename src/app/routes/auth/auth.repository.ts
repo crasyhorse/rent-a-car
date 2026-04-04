@@ -47,22 +47,32 @@ const mergeUser = async (user: User | RegisterInput): Promise<User> => {
     const data: Database = await readDatabase();
     let mergedUser: User;
 
-    if (Object.hasOwn(user, 'id')) {
-        const _user: User = { ...user } as User;
-        const i = await findUser(data, _user);
-
-        mergedUser = await updateUser(_user);
-        data.users[i] = { ...user, ...mergedUser };
-    } else {
-        const _user: RegisterInput = { ...user } as RegisterInput;
-
-        mergedUser = createUser(_user);
+    if (userIsNew(user)) {
+        mergedUser = createUser(user);
         data.users.push(mergedUser);
+    } else {
+        const idx = await findUser(data, user);
+        mergedUser = await updateUser(user);
+        data.users[idx] = { ...user, ...mergedUser };
     }
 
     await writeDatabase(data);
 
     return mergedUser;
+};
+
+/**
+ * Returns true if the user has no *id* attribute and therefore, is new.
+ *
+ * A user is considered new when they are registered at the end of the registration process.
+ * At this point, the user does not yet have an *id* attribute, as they have not been
+ * added to the database yet.
+ *
+ * @param user
+ * @returns true if the user has no *id* attribute
+ */
+const userIsNew = (user: User | RegisterInput): user is RegisterInput => {
+    return !Object.hasOwn(user, 'id');
 };
 
 const userIsUnique = async (email: string): Promise<boolean> => {
@@ -112,9 +122,9 @@ const updateUser = async (user: User): Promise<User> => {
 
 export {
     createAuthData,
+    getPasswordById,
     getUserByEmail,
     getUserById,
-    getPasswordById,
     mergeUser,
     userIsUnique
 };
