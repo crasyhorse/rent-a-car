@@ -48,6 +48,7 @@ const register = async (
     registerPayload: RegisterInput
 ): Promise<AuthResponse | never> => {
     const isUserUnique = await userIsUnique(registerPayload.email);
+
     if (!isUserUnique) {
         throw new HttpException(
             422,
@@ -64,9 +65,11 @@ const register = async (
     if (!password) {
         throw new HttpException(422, 'Password cannot be blank.');
     }
+
     if (!dateOfBirth) {
         throw new HttpException(422, 'Date of birth cannot be blank.');
     }
+
     if (!driversLicense) {
         throw new HttpException(422, 'Drivers license cannot be blank.');
     }
