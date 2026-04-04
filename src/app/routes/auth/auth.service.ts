@@ -75,7 +75,7 @@ const register = async (
 
     await createAuthData(user, registerPayload.password);
 
-    return { ...user, token: generateToken(user) };
+    return { user: user, token: generateToken(user) };
 };
 
 const generateToken = (user: User): string =>

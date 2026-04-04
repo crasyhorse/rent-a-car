@@ -25,10 +25,8 @@ router.post(
         next: NextFunction
     ) => {
         try {
-            const user = await register(req.body.user);
-            attachAuthCookie(res, user.token);
-            const { token, ...safeUser } = user;
-            res.status(201).json(safeUser);
+            const authInfo = await register(request.body.user);
+            attachAuthCookie(response, authInfo.token);
         } catch (error) {
             next(error);
         }
@@ -43,10 +41,8 @@ router.post(
         next: NextFunction
     ) => {
         try {
-            const user = await login(req.body.user);
-            attachAuthCookie(res, user.token);
-            const { token, ...safeUser } = user;
-            res.status(200).json(safeUser);
+            const authInfo = await login(request.body.user);
+            attachAuthCookie(response, authInfo.token);
         } catch (error) {
             next(error);
         }
