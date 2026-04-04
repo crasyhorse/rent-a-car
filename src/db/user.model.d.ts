@@ -1,8 +1,17 @@
+import type { UserProfile } from '@/db/user-profile.model';
+
 interface Address {
     street: string;
     houseNumber: string;
     zipCode: string;
     locality: string;
+}
+
+export interface DriverLicense {
+    numberMasked: string;
+    country: string;
+    expiryDate: string;
+    verified: boolean;
 }
 
 export interface User {
@@ -11,7 +20,9 @@ export interface User {
     firstName: string;
     lastName: string;
     dateOfBirth: string;
-    driversLicense: string;
+    phone: string;
+    driverLicense?: DriverLicense;
     address: Address;
+    profile?: UserProfile;
 }
 
