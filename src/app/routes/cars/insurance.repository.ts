@@ -3,12 +3,11 @@ import { readDatabase } from '@/db/db';
 import type { Insurance } from '@/db/insurance.model';
 import jsonata from 'jsonata';
 
-const getInsurances = async (): Promise<Insurance[] | undefined> => {
+const getInsurances = async (): Promise<Insurance[]> => {
     const data: Database = await readDatabase();
 
     const expression = jsonata('insurances');
-    const insurances: Promise<Insurance[] | undefined> =
-        expression.evaluate(data);
+    const insurances = expression.evaluate(data) as Promise<Insurance[]>;
 
     return insurances;
 };
@@ -19,8 +18,9 @@ const getInsuranceById = async (
     const data: Database = await readDatabase();
 
     const expression = jsonata(`insurances[id="${id}"]`);
-    const insurance: Promise<Insurance | undefined> =
-        expression.evaluate(data);
+    const insurance = expression.evaluate(data) as Promise<
+        Insurance | undefined
+    >;
 
     return insurance;
 };

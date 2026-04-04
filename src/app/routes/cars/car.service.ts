@@ -19,7 +19,7 @@ const getCar = async (id: string) => {
 const listCars = async () => {
     const cars = await getCars();
 
-    if (!cars || cars?.length === 0) {
+    if (cars.length === 0) {
         throw new HttpException(404, 'Could not find any car in the system!');
     }
 
@@ -29,7 +29,7 @@ const listCars = async () => {
 const listInsurances = async () => {
     const insurances = await getInsurances();
 
-    if (!insurances || insurances?.length === 0) {
+    if (insurances.length === 0) {
         throw new HttpException(404, 'No insurances could be found!');
     }
 
@@ -39,12 +39,12 @@ const listInsurances = async () => {
 const listOptions = async () => {
     const options = await getOptions();
 
-    if (!options || options?.length === 0) {
+    if (options?.length === 0) {
         throw new HttpException(404, 'Could not find any bookable options!');
     }
 
     return options;
 };
 
-export { listCars, getCar, listInsurances, listOptions };
+export { getCar, listCars, listInsurances, listOptions };
 
