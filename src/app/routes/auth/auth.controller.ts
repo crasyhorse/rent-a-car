@@ -1,7 +1,7 @@
-import { NextFunction, Response, Request, Router } from 'express';
-import { login, register } from '@/app/routes/auth/auth.service.js';
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import { login, register } from '@/app/routes/auth/auth.service';
 import { LoginInput } from '@/app/routes/auth/login-input.model';
+import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import { NextFunction, Request, Response, Router } from 'express';
 
 const router = Router();
 const AUTH_COOKIE_NAME = 'access_token';

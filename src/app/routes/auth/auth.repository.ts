@@ -1,12 +1,12 @@
+import HttpException from '@/app/models/HttpException';
+import { AuthData } from '@/db/auth-data.model';
+import type { Database } from '@/db/database.model';
 import { readDatabase, writeDatabase } from '@/db/db';
 import { User } from '@/db/user.model';
+import * as bcrypt from 'bcryptjs';
 import jsonata from 'jsonata';
-import type { Database } from '@/db/database.model';
-import HttpException from '@/app/models/HttpException';
 import { randomUUID } from 'node:crypto';
 import { RegisterInput } from './register-input.model';
-import { AuthData } from '@/db/auth-data.model';
-import * as bcrypt from 'bcryptjs';
 
 const createAuthData = async (user: User, password: string): Promise<void> => {
     const data: Database = await readDatabase();
