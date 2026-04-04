@@ -1,62 +1,27 @@
 import HttpException from '@/app/models/HttpException';
+import { AuthResponse } from '@/app/routes/auth/auth-response.model';
 import {
     createAuthData,
     getPasswordById,
     getUserByEmail,
     mergeUser,
     userIsUnique
-} from '@/app/routes/auth//auth.repository';
-import { AuthResponse } from '@/app/routes/auth/auth-response.model';
+} from '@/app/routes/auth/auth.repository';
 import { LoginInput } from '@/app/routes/auth/login-input.model';
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import {
+    RawRegisterInput,
+    RegisterInput
+} from '@/app/routes/auth/register-input.model';
 import { User } from '@/db/user.model';
 import * as bcrypt from 'bcryptjs';
 import type { Secret } from 'jsonwebtoken';
 import * as jwt from 'jsonwebtoken';
 
 const login = async (
-    loginPayload: LoginInput
-): Promise<AuthResponse | never> => {
+    loginPayload: Partial<LoginInput>
+): Promise<AuthResponse> => {
     const email = loginPayload.email?.trim();
     const password = loginPayload.password?.trim();
-
-    if (!email) {
-        throw new HttpException(422, 'Email cannot be blank');
-    }
-
-    if (!password) {
-        throw new HttpException(422, 'Password cannot be blank');
-    }
-
-    const user = await getUserByEmail(email);
-
-    if (user) {
-        const passwordHash = await getPasswordById(user.id);
-
-        if (
-            passwordHash &&
-            (await bcrypt.compare(password, passwordHash as string))
-        ) {
-            return { user: user, token: generateToken(user) };
-        }
-    }
-
-    throw new HttpException(403, 'Login failed!');
-};
-
-const register = async (
-    registerPayload: RegisterInput
-): Promise<AuthResponse | never> => {
-    const isUserUnique = await userIsUnique(registerPayload.email);
-
-    if (!isUserUnique) {
-        throw new HttpException(
-            422,
-            'A user with this email address does already exist.'
-        );
-    }
-
-    const { email, password, dateOfBirth, driversLicense } = registerPayload;
 
     if (!email) {
         throw new HttpException(422, 'Email cannot be blank.');
@@ -66,24 +31,114 @@ const register = async (
         throw new HttpException(422, 'Password cannot be blank.');
     }
 
+    const user = await getUserByEmail(email);
+
+    if (user) {
+        const passwordHash = await getPasswordById(user.id);
+
+        if (passwordHash && (await bcrypt.compare(password, passwordHash))) {
+            return { user, token: generateToken(user) };
+        }
+    }
+
+    throw new HttpException(403, 'Login failed.');
+};
+
+const register = async (
+    registerPayload: RawRegisterInput
+): Promise<AuthResponse> => {
+    const email = registerPayload.email?.trim();
+    const password = registerPayload.password?.trim();
+    const firstName = registerPayload.firstName?.trim();
+    const lastName = registerPayload.lastName?.trim();
+    const dateOfBirth = registerPayload.dateOfBirth?.trim();
+    const phone = registerPayload.phone?.trim();
+
+    if (!email) {
+        throw new HttpException(422, 'Email cannot be blank.');
+    }
+
+    if (!password) {
+        throw new HttpException(422, 'Password cannot be blank.');
+    }
+
+    if (!firstName) {
+        throw new HttpException(422, 'First name cannot be blank.');
+    }
+
+    if (!lastName) {
+        throw new HttpException(422, 'Last name cannot be blank.');
+    }
+
     if (!dateOfBirth) {
         throw new HttpException(422, 'Date of birth cannot be blank.');
     }
 
-    if (!driversLicense) {
-        throw new HttpException(422, 'Drivers license cannot be blank.');
+    if (!phone) {
+        throw new HttpException(422, 'Phone cannot be blank.');
     }
 
-    const user = await mergeUser(registerPayload);
+    if (!registerPayload.address) {
+        throw new HttpException(422, 'Address cannot be blank.');
+    }
 
-    await createAuthData(user, registerPayload.password);
+    const street = registerPayload.address.street?.trim();
+    const houseNumber = registerPayload.address.houseNumber?.trim();
+    const zipCode = registerPayload.address.zipCode?.trim();
+    const locality = registerPayload.address.locality?.trim();
 
-    return { user: user, token: generateToken(user) };
+    if (!street) {
+        throw new HttpException(422, 'Street cannot be blank.');
+    }
+
+    if (!houseNumber) {
+        throw new HttpException(422, 'House number cannot be blank.');
+    }
+
+    if (!zipCode) {
+        throw new HttpException(422, 'Zip code cannot be blank.');
+    }
+
+    if (!locality) {
+        throw new HttpException(422, 'Locality cannot be blank.');
+    }
+
+    const isUnique = await userIsUnique(email);
+
+    if (!isUnique) {
+        throw new HttpException(
+            422,
+            'A user with this email address does already exist.'
+        );
+    }
+
+    const normalizedPayload: RegisterInput = {
+        ...registerPayload,
+        email,
+        password,
+        firstName,
+        lastName,
+        dateOfBirth,
+        phone,
+        address: {
+            street,
+            houseNumber,
+            zipCode,
+            locality
+        }
+    };
+
+    const user = await mergeUser(normalizedPayload);
+
+    await createAuthData(user, password);
+
+    return { user, token: generateToken(user) };
 };
 
 const generateToken = (user: User): string =>
     jwt.sign(user, process.env.VITE_JWT_SECRET as Secret, {
         expiresIn: '1h'
     });
+
 export { login, register };
 

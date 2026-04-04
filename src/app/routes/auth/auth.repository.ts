@@ -1,4 +1,5 @@
 import HttpException from '@/app/models/HttpException';
+import { RegisterInput } from '@/app/routes/auth/register-input.model';
 import { AuthData } from '@/db/auth-data.model';
 import type { Database } from '@/db/database.model';
 import { readDatabase, writeDatabase } from '@/db/db';
@@ -6,7 +7,6 @@ import { User } from '@/db/user.model';
 import * as bcrypt from 'bcryptjs';
 import jsonata from 'jsonata';
 import { randomUUID } from 'node:crypto';
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
 
 const createAuthData = async (user: User, password: string): Promise<void> => {
     const data: Database = await readDatabase();
@@ -21,26 +21,24 @@ const createAuthData = async (user: User, password: string): Promise<void> => {
     await writeDatabase(data);
 };
 
-const getEntity = async <T extends User | string>(
-    jsonataString: string
-): Promise<T | undefined> => {
+const getEntity = async <T>(jsonataString: string): Promise<T | undefined> => {
     const data: Database = await readDatabase();
     const expression = jsonata(jsonataString);
-    const entity: Promise<T | undefined> = expression.evaluate(data);
+    const entity = (await expression.evaluate(data)) as T | undefined;
 
     return entity;
 };
 
 const getUserByEmail = async (email: string): Promise<User | undefined> => {
-    return getEntity(`users[email="${email}"]`);
+    return getEntity<User>(`users[email="${email}"]`);
 };
 
 const getUserById = async (userId: User['id']): Promise<User | undefined> => {
-    return getEntity(`users[id="${userId}"]`);
+    return getEntity<User>(`users[id="${userId}"]`);
 };
 
 const getPasswordById = async (userId: string): Promise<string | undefined> => {
-    return getEntity(`auth[id="${userId}"].password`);
+    return getEntity<string>(`auth[id="${userId}"].password`);
 };
 
 const mergeUser = async (user: User | RegisterInput): Promise<User> => {
@@ -53,7 +51,7 @@ const mergeUser = async (user: User | RegisterInput): Promise<User> => {
     } else {
         const idx = await findUser(data, user);
         mergedUser = await updateUser(user);
-        data.users[idx] = { ...user, ...mergedUser };
+        data.users[idx] = mergedUser;
     }
 
     await writeDatabase(data);
@@ -81,32 +79,29 @@ const userIsUnique = async (email: string): Promise<boolean> => {
 
 const createUser = (user: RegisterInput): User => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _user = (({ password, ...userWithoutPassword }) =>
-        userWithoutPassword)(user);
+    const userWithoutPassword = (({ password, ...rest }) => rest)(user);
 
-    return { ..._user, id: randomUUID() };
+    return {
+        ...userWithoutPassword,
+        id: randomUUID()
+    };
 };
 
-const findUser = async (
-    data: Database,
-    user: User
-): Promise<number | never> => {
-    const i = data.users.findIndex((u: User) => u.id === user.id);
+const findUser = async (data: Database, user: User): Promise<number> => {
+    const idx = data.users.findIndex((u: User) => u.id === user.id);
 
-    if (i === -1) {
+    if (idx === -1) {
         throw new HttpException(
             422,
             'A problem occured when you tried to update this user.'
         );
     }
 
-    return i;
+    return idx;
 };
 
 const updateUser = async (user: User): Promise<User> => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _user = (({ id, email, ...clone }) => clone)(user);
-    const originalUser = await getUserByEmail(user.email);
+    const originalUser = await getUserById(user.id);
 
     if (!originalUser) {
         throw new HttpException(
@@ -115,9 +110,11 @@ const updateUser = async (user: User): Promise<User> => {
         );
     }
 
-    const updatedUser = { ...originalUser, ..._user };
-
-    return updatedUser;
+    return {
+        ...originalUser,
+        ...user,
+        id: originalUser.id
+    };
 };
 
 export {
