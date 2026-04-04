@@ -6,7 +6,7 @@ import { User } from '@/db/user.model';
 import * as bcrypt from 'bcryptjs';
 import jsonata from 'jsonata';
 import { randomUUID } from 'node:crypto';
-import { RegisterInput } from './register-input.model';
+import { RegisterInput } from '@/app/routes/auth/register-input.model';
 
 const createAuthData = async (user: User, password: string): Promise<void> => {
     const data: Database = await readDatabase();
