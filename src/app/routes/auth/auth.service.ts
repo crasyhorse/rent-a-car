@@ -1,20 +1,22 @@
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
-import { LoginInput } from '@/app/routes/auth/login-input.model';
-import { User } from '@/db/user.model';
-import { ActiveUser } from '@/db/active-user.model';
-import HttpException from '@/app/models/HttpException.js';
-import * as bcrypt from 'bcryptjs';
+import HttpException from '@/app/models/HttpException';
 import {
     createAuthData,
     getPasswordById,
     getUserByEmail,
     mergeUser,
     userIsUnique
-} from '@/app/routes/auth//auth.repository.js';
-import * as jwt from 'jsonwebtoken';
+} from '@/app/routes/auth//auth.repository';
+import { AuthResponse } from '@/app/routes/auth/auth-response.model';
+import { LoginInput } from '@/app/routes/auth/login-input.model';
+import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import { User } from '@/db/user.model';
+import * as bcrypt from 'bcryptjs';
 import type { Secret } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
-const login = async (loginPayload: LoginInput): Promise<ActiveUser | never> => {
+const login = async (
+    loginPayload: LoginInput
+): Promise<AuthResponse | never> => {
     const email = loginPayload.email?.trim();
     const password = loginPayload.password?.trim();
 
@@ -35,11 +37,7 @@ const login = async (loginPayload: LoginInput): Promise<ActiveUser | never> => {
             passwordHash &&
             (await bcrypt.compare(password, passwordHash as string))
         ) {
-            const activeUser: ActiveUser = {
-                ...user,
-                token: generateToken(user)
-            };
-            return activeUser;
+            return { user: user, token: generateToken(user) };
         }
     }
 
@@ -48,7 +46,7 @@ const login = async (loginPayload: LoginInput): Promise<ActiveUser | never> => {
 
 const register = async (
     registerPayload: RegisterInput
-): Promise<ActiveUser | never> => {
+): Promise<AuthResponse | never> => {
     const isUserUnique = await userIsUnique(registerPayload.email);
     if (!isUserUnique) {
         throw new HttpException(
