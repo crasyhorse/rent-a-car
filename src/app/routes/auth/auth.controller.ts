@@ -4,15 +4,13 @@ import { RegisterInput } from '@/app/routes/auth/register-input.model';
 import { NextFunction, Request, Response, Router } from 'express';
 
 const router = Router();
-const AUTH_COOKIE_NAME = 'access_token';
-const AUTH_TOKEN_MAX_AGE_MS = 60 * 60 * 1000;
 
-const attachAuthCookie = (res: Response, token: string) => {
-    res.cookie(AUTH_COOKIE_NAME, token, {
+const attachAuthCookie = (response: Response, token: string) => {
+    response.cookie('access_token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: AUTH_TOKEN_MAX_AGE_MS,
+        maxAge: 60 * 60 * 1000,
         path: '/'
     });
 };
