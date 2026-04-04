@@ -21,31 +21,28 @@ const createAuthData = async (user: User, password: string): Promise<void> => {
     await writeDatabase(data);
 };
 
-const getUserByEmail = async (email: string): Promise<User | undefined> => {
+const getEntity = async <T extends User | string>(
+    jsonataString: string
+): Promise<T | undefined> => {
     const data: Database = await readDatabase();
-    const expression = jsonata(`users[email="${email}"]`);
-    const user: Promise<User | undefined> = expression.evaluate(data);
+    const expression = jsonata(jsonataString);
+    const entity: Promise<T | undefined> = expression.evaluate(data);
 
-    return user;
+    return entity;
 };
 
-const getUserById = async (userId: User["id"]): Promise<User | undefined> => {
-    const data: Database = await readDatabase();
-    const expression = jsonata(`users[id="${userId}"]`);
-    const user: Promise<User | undefined> = expression.evaluate(data);
+const getUserByEmail = async (email: string): Promise<User | undefined> => {
+    return getEntity(`users[email="${email}"]`);
+};
 
-    return user;
+const getUserById = async (userId: User['id']): Promise<User | undefined> => {
+    return getEntity(`users[id="${userId}"]`);
 };
 
 const getPasswordById = async (userId: string): Promise<string | undefined> => {
-    const data: Database = await readDatabase();
-    const expression = jsonata(`auth[id="${userId}"].password`);
-    const password: Promise<string | undefined> = expression.evaluate(data);
-
-    return password;
+    return getEntity(`auth[id="${userId}"].password`);
 };
 
-//TODO The token prop should be removed in the service if the user changes his profile.
 const mergeUser = async (user: User | RegisterInput): Promise<User> => {
     const data: Database = await readDatabase();
     let mergedUser: User;
