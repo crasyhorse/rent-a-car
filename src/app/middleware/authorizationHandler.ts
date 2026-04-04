@@ -19,16 +19,16 @@ const extractAuthTokenFromRequest: TokenGetter = (
         return undefined;
     }
 
-    const tokenCookie = cookies
+    const authCookie = cookies
         .split(';')
         .map((cookie) => cookie.trim())
         .find((cookie) => cookie.startsWith('access_token='));
 
-    if (!tokenCookie) {
+    if (!authCookie) {
         return undefined;
     }
 
-    return decodeURIComponent(tokenCookie.split('=')[1]);
+    return decodeURIComponent(authCookie.split('=')[1]);
 };
 
 const jwtOptions: JwtOptions = {
