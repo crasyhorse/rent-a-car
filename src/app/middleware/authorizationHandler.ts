@@ -11,9 +11,9 @@ interface JwtOptions {
 }
 
 const extractAuthTokenFromRequest: TokenGetter = (
-    req: Request
+    request: Request
 ): string | Promise<string> | undefined => {
-    const cookies = req.headers?.cookie;
+    const cookies = request.headers?.cookie;
 
     if (!cookies) {
         return undefined;
