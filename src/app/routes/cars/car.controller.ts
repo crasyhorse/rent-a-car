@@ -12,10 +12,10 @@ const router = Router();
 router.get(
     '/cars/',
     authHandler.optional,
-    async (_req: Request, res: Response, next: NextFunction) => {
+    async (_request: Request, response: Response, next: NextFunction) => {
         try {
             const result = await listCars();
-            res.json(result);
+            response.json(result);
         } catch (error) {
             next(error);
         }
@@ -25,10 +25,10 @@ router.get(
 router.get(
     '/cars/insurances',
     authHandler.optional,
-    async (_req: Request, res: Response, next: NextFunction) => {
+    async (_request: Request, response: Response, next: NextFunction) => {
         try {
             const result = await listInsurances();
-            res.json(result);
+            response.json(result);
         } catch (error) {
             next(error);
         }
@@ -39,13 +39,13 @@ router.get(
     '/cars/:id',
     authHandler.optional,
     async (
-        req: Request<{ id: string }>,
-        res: Response,
+        request: Request<{ id: string }>,
+        response: Response,
         next: NextFunction
     ) => {
         try {
-            const result = await getCar(req.params.id);
-            res.json(result);
+            const result = await getCar(request.params.id);
+            response.json(result);
         } catch (error) {
             next(error);
         }
@@ -55,10 +55,10 @@ router.get(
 router.get(
     '/cars/options',
     authHandler.optional,
-    async (_req: Request, res: Response, next: NextFunction) => {
+    async (_request: Request, response: Response, next: NextFunction) => {
         try {
             const result = await listOptions();
-            res.json(result);
+            response.json(result);
         } catch (error) {
             next(error);
         }
