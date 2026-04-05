@@ -55,14 +55,44 @@ const executeBooking = async (
         throw new HttpException(422, 'End date cannot be blank.');
     }
 
-    if (await carIsAlreadyBooked(bookingInput.carId, startDate, endDate)) {
+    const normalizedInput: BookingDataInput = {
+        userId,
+        carId,
+        insuranceId,
+        optionId,
+        startDate: startDateRaw,
+        endDate: endDateRaw
+    };
+
+    const { startDate, endDate } = validateDates(normalizedInput);
+
+    const conflictingBooking = await getConflictingBooking(
+        normalizedInput.carId,
+        startDate,
+        endDate
+    );
+
+    if (conflictingBooking) {
+        if (conflictingBooking.userId !== normalizedInput.userId) {
+            throw new HttpException(
+                409,
+                'This car has already been booked by another user in this period.'
+            );
+        }
+
         throw new HttpException(
             403,
             'This car has already been booked in this period!'
         );
     }
 
-    const user = await getUserById(bookingInput.userId);
+    const [user, car, insurance, option] = await Promise.all([
+        getUserById(normalizedInput.userId),
+        getCarById(normalizedInput.carId),
+        getInsuranceById(normalizedInput.insuranceId),
+        getOptionById(normalizedInput.optionId)
+    ]);
+
     if (!user) {
         throw new HttpException(
             422,
@@ -70,7 +100,6 @@ const executeBooking = async (
         );
     }
 
-    const car = await getCarById(bookingInput.carId);
     if (!car) {
         throw new HttpException(
             422,
@@ -78,7 +107,6 @@ const executeBooking = async (
         );
     }
 
-    const insurance = await getInsuranceById(bookingInput.insuranceId);
     if (!insurance) {
         throw new HttpException(
             422,
@@ -86,7 +114,6 @@ const executeBooking = async (
         );
     }
 
-    const option = await getOptionById(bookingInput.optionId);
     if (!option) {
         throw new HttpException(
             422,
