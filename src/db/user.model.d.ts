@@ -1,6 +1,6 @@
 import type { UserProfile } from '@/db/user-profile.model';
 
-interface Address {
+export interface Address {
     street: string;
     houseNumber: string;
     zipCode: string;
@@ -25,4 +25,3 @@ export interface User {
     address: Address;
     profile?: UserProfile;
 }
-

@@ -1,5 +1,3 @@
-import type { User } from '@/db/user.model';
-
 export type PaymentMethodType =
     | 'credit-card'
     | 'sepa-credit-transfer'
@@ -34,10 +32,9 @@ export type UserPaymentMethod =
     | SepaCreditTransferPaymentMethod
     | SepaDirectDebitPaymentMethod;
 
-export interface UserProfile extends User {
-    paymentMethods: UserPaymentMethod[];
-    defaultPaymentMethodId: string;
+export interface UserProfile {
+    paymentMethods?: UserPaymentMethod[];
+    defaultPaymentMethodId?: string;
 }
 
-export type UserProfilePatch = Partial<Omit<UserProfile, 'id'>>;
-
+export type UserProfilePatch = Partial<UserProfile>;
