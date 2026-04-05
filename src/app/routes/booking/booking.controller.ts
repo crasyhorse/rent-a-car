@@ -1,7 +1,10 @@
-import { NextFunction, Response, Request, Router } from 'express';
 import authHandler from '@/app/middleware/authorizationHandler';
-import { executeBooking } from '@/app/routes/booking/booking.service.js';
-import { BookingDataInput } from '@/db/booking-data-input.model';
+import {
+    cancelBooking,
+    executeBooking
+} from '@/app/routes/booking/booking.service';
+import { RawBookingDataInput } from '@/db/booking-data-input.model';
+import { NextFunction, Request, Response, Router } from 'express';
 
 const router = Router();
 
