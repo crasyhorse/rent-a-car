@@ -170,10 +170,10 @@ const getConflictingBooking = async (
     carId: Car['id'],
     startDate: Date,
     endDate: Date
-): Promise<boolean> => {
+): Promise<BookingDataRecord | undefined> => {
     const bookings = await getBookingsByCarId(carId);
 
-    const isBooked = bookings.some((booking) =>
+    return bookings.find((booking) =>
         areIntervalsOverlapping(
             {
                 start: startDate,
