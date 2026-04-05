@@ -1,5 +1,6 @@
 import { BookingDataInput } from '@/db/booking-data-input.model';
 
-interface BookingDataRecord extends BookingDataInput {
+export interface BookingDataRecord extends BookingDataInput {
+    id: string;
     price: number;
 }
