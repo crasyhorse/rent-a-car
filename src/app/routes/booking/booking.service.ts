@@ -135,12 +135,38 @@ const calculatePrice = (
     return days * car.dailyRate + insurance.price + option.price;
 };
 
-// TODO
-const cancleBooking = () => {
+const cancelBooking = async (
+    bookingId: string,
+    userId: string
+): Promise<void> => {
+    const normalizedBookingId = bookingId.trim();
+    const normalizedUserId = userId.trim();
 
-}
+    if (!normalizedBookingId) {
+        throw new HttpException(422, 'Booking id cannot be blank.');
+    }
 
-const carIsAlreadyBooked = async (
+    if (!normalizedUserId) {
+        throw new HttpException(422, 'User id cannot be blank.');
+    }
+
+    const booking = await getBookingById(normalizedBookingId);
+
+    if (!booking) {
+        throw new HttpException(404, 'Booking could not be found.');
+    }
+
+    if (booking.userId !== normalizedUserId) {
+        throw new HttpException(
+            403,
+            'Forbidden. You can only cancel your own bookings.'
+        );
+    }
+
+    await deleteBookingById(normalizedBookingId);
+};
+
+const getConflictingBooking = async (
     carId: Car['id'],
     startDate: Date,
     endDate: Date
