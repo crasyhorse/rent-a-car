@@ -125,4 +125,3 @@ export {
     mergeUser,
     userIsUnique
 };
-
