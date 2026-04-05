@@ -12,20 +12,33 @@ router.post(
     '/bookings/:customerId',
     authHandler.required,
     async (
-        req: Request<{ customerId: string }, unknown, { data: BookingDataInput }>,
-        res: Response,
+        request: Request<
+            { customerId: string },
+            unknown,
+            { data: RawBookingDataInput }
+        >,
+        response: Response,
         next: NextFunction
     ) => {
         try {
-            const authUserId = (req as Request & { auth?: { id?: string } }).auth
-                ?.id;
+            const authUserId = (request as Request & { auth?: { id?: string } })
+                .auth?.id;
 
-            if (req.params.customerId !== req.body.data?.userId) {
-                res.status(422).json({
+            if (request.params.customerId !== request.body.data?.userId) {
+                response.status(422).json({
                     status: 422,
-                    message: 'Customer id in path does not match payload user id.'
+                    message:
+                        'Customer id in path does not match payload user id.'
                 });
+                return;
+            }
 
+            if (authUserId && request.params.customerId !== authUserId) {
+                response.status(403).json({
+                    status: 403,
+                    message:
+                        'Forbidden. You can only create bookings for yourself.'
+                });
                 return;
             }
 
