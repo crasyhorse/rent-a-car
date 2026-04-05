@@ -22,17 +22,37 @@ import { areIntervalsOverlapping, differenceInCalendarDays } from 'date-fns';
 import { randomUUID } from 'node:crypto';
 
 const executeBooking = async (
-    bookingInput: BookingDataInput
-): Promise<BookingData | never> => {
-    const startDate = new Date(bookingInput.startDate);
-    const endDate = new Date(bookingInput.endDate);
+    bookingInput: RawBookingDataInput
+): Promise<BookingData> => {
+    const userId = bookingInput.userId?.trim();
+    const carId = bookingInput.carId?.trim();
+    const insuranceId = bookingInput.insuranceId?.trim();
+    const optionId = bookingInput.optionId?.trim();
+    const startDateRaw = bookingInput.startDate?.trim();
+    const endDateRaw = bookingInput.endDate?.trim();
 
-    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
-        throw new HttpException(422, 'Start date or end date is invalid.');
+    if (!userId) {
+        throw new HttpException(422, 'User id cannot be blank.');
     }
 
-    if (startDate >= endDate) {
-        throw new HttpException(422, 'Start date must be before end date.');
+    if (!carId) {
+        throw new HttpException(422, 'Car id cannot be blank.');
+    }
+
+    if (!insuranceId) {
+        throw new HttpException(422, 'Insurance id cannot be blank.');
+    }
+
+    if (!optionId) {
+        throw new HttpException(422, 'Option id cannot be blank.');
+    }
+
+    if (!startDateRaw) {
+        throw new HttpException(422, 'Start date cannot be blank.');
+    }
+
+    if (!endDateRaw) {
+        throw new HttpException(422, 'End date cannot be blank.');
     }
 
     if (await carIsAlreadyBooked(bookingInput.carId, startDate, endDate)) {
