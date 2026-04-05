@@ -126,13 +126,9 @@ const calculatePrice = (
     insurance: Insurance,
     option: Option
 ): number | null => {
-    const duration = intervalToDuration({
-        start: startDate,
-        end: endDate
-    });
-    const days = duration.days ?? 0;
+    const days = differenceInCalendarDays(endDate, startDate);
 
-    if (!days) {
+    if (days <= 0) {
         return null;
     }
 
