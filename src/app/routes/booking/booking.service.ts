@@ -24,44 +24,13 @@ import { randomUUID } from 'node:crypto';
 const executeBooking = async (
     bookingInput: RawBookingDataInput
 ): Promise<BookingData> => {
-    const userId = bookingInput.userId?.trim();
-    const carId = bookingInput.carId?.trim();
-    const insuranceId = bookingInput.insuranceId?.trim();
-    const optionId = bookingInput.optionId?.trim();
-    const startDateRaw = bookingInput.startDate?.trim();
-    const endDateRaw = bookingInput.endDate?.trim();
-
-    if (!userId) {
-        throw new HttpException(422, 'User id cannot be blank.');
-    }
-
-    if (!carId) {
-        throw new HttpException(422, 'Car id cannot be blank.');
-    }
-
-    if (!insuranceId) {
-        throw new HttpException(422, 'Insurance id cannot be blank.');
-    }
-
-    if (!optionId) {
-        throw new HttpException(422, 'Option id cannot be blank.');
-    }
-
-    if (!startDateRaw) {
-        throw new HttpException(422, 'Start date cannot be blank.');
-    }
-
-    if (!endDateRaw) {
-        throw new HttpException(422, 'End date cannot be blank.');
-    }
-
     const normalizedInput: BookingDataInput = {
-        userId,
-        carId,
-        insuranceId,
-        optionId,
-        startDate: startDateRaw,
-        endDate: endDateRaw
+        userId: bookingInput.userId?.trim() ?? '',
+        carId: bookingInput.carId?.trim() ?? '',
+        insuranceId: bookingInput.insuranceId?.trim() ?? '',
+        optionId: bookingInput.optionId?.trim() ?? '',
+        startDate: bookingInput.startDate?.trim() ?? '',
+        endDate: bookingInput.endDate?.trim() ?? ''
     };
 
     const { startDate, endDate } = validateDates(normalizedInput);
@@ -122,26 +91,32 @@ const executeBooking = async (
     }
 
     const price = calculatePrice(startDate, endDate, car, insurance, option);
-    if (!price) {
+
+    if (price === null) {
         throw new HttpException(
             422,
-            'Could not calculate price. The booking data seams to be wrong.'
+            'Could not calculate price. The booking data seems to be wrong.'
         );
     }
 
-    const bookingData: BookingData = {
+    const bookingRecord: BookingDataRecord = {
+        id: randomUUID(),
+        ...normalizedInput,
+        price
+    };
+
+    await createBooking(bookingRecord);
+
+    return {
+        id: bookingRecord.id,
         user,
         car,
-        startDate,
-        endDate,
+        startDate: normalizedInput.startDate,
+        endDate: normalizedInput.endDate,
         insurance,
         option,
         price: price.toFixed(2)
     };
-
-    await createBooking({ ...bookingInput, price: price });
-
-    return bookingData;
 };
 
 const calculatePrice = (
