@@ -42,17 +42,41 @@ router.post(
                 return;
             }
 
-            if (authUserId && req.params.customerId !== authUserId) {
-                res.status(403).json({
-                    status: 403,
-                    message: 'Forbidden. You can only create bookings for yourself.'
-                });
+            const booking = await executeBooking(request.body.data);
+            response.status(201).json(booking);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 
+router.delete(
+    '/bookings/:customerId/:bookingId',
+    authHandler.required,
+    async (
+        request: Request<{ customerId: string; bookingId: string }>,
+        response: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const authUserId = (request as Request & { auth?: { id?: string } })
+                .auth?.id;
+
+            if (authUserId && request.params.customerId !== authUserId) {
+                response.status(403).json({
+                    status: 403,
+                    message:
+                        'Forbidden. You can only cancel bookings for yourself.'
+                });
                 return;
             }
 
-            const booking = await executeBooking(req.body.data);
-            res.status(201).json(booking);
+            await cancelBooking(
+                request.params.bookingId,
+                request.params.customerId
+            );
+
+            response.status(204).end();
         } catch (error) {
             next(error);
         }
