@@ -1,17 +1,25 @@
-import { BookingDataInput } from '@/db/booking-data-input.model';
+import HttpException from '@/app/models/HttpException';
+import { getUserById } from '@/app/routes/auth/auth.repository';
+import {
+    createBooking,
+    deleteBookingById,
+    getBookingById,
+    getBookingsByCarId
+} from '@/app/routes/booking/booking.repository';
+import { getCarById } from '@/app/routes/cars/car.repository';
+import { getInsuranceById } from '@/app/routes/cars/insurance.repository';
+import { getOptionById } from '@/app/routes/cars/option.repository';
 import { BookingData } from '@/db/booking-data';
+import {
+    BookingDataInput,
+    RawBookingDataInput
+} from '@/db/booking-data-input.model';
+import { BookingDataRecord } from '@/db/booking-data-record';
 import { Car } from '@/db/car.model';
 import { Insurance } from '@/db/insurance.model';
 import { Option } from '@/db/option.model';
-import { getBookingsByCarId } from '@/app/routes/booking/booking.repositroy';
-import HttpException from '@/app/models/HttpException';
-import { createBooking } from '@/app/routes/booking/booking.repositroy';
-import { getUserById } from '@/app/routes/auth/auth.repository';
-import { getCarById } from '@/app/routes/cars/car.repository';
-import { getInsuranceById } from '../cars/insurance.repository';
-import { getOptionById } from '../cars/opiton.repository';
-import { areIntervalsOverlapping } from 'date-fns';
-import { intervalToDuration } from 'date-fns';
+import { areIntervalsOverlapping, differenceInCalendarDays } from 'date-fns';
+import { randomUUID } from 'node:crypto';
 
 const executeBooking = async (
     bookingInput: BookingDataInput
