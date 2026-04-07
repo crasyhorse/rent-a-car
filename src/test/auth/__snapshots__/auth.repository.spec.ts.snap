@@ -9,11 +9,17 @@ exports[`auth.repository > getUserByEmail > returns > an authenticated user. 1`]
     "zipCode": "NJ 07306",
   },
   "dateOfBirth": "2000-01-13",
-  "driversLicense": "F352GGE4711",
+  "driverLicense": {
+    "country": "Germany",
+    "expiryDate": "2028-01-13",
+    "numberMasked": "F352GGE4711",
+    "verified": true,
+  },
   "email": "danieldeskclerk@example.com",
   "firstName": "Daniel",
   "id": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
   "lastName": "Deskclerk",
+  "phone": "173-555-12345",
 }
 `;
 

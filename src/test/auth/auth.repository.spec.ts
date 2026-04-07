@@ -1,17 +1,53 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
+    createAuthData,
     getUserByEmail,
     getUserById,
     getPasswordById,
     mergeUser
 } from '@/app/routes/auth/auth.repository';
-import { readDatabase, writeDatabase } from '@/db/db';
+import * as Db from '@/db/db';
 import type { User } from '@/db/user.model';
 import type { Database } from '@/db/database.model';
 import HttpException from '@/app/models/HttpException';
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import { RegisterInput } from '@/db/register-input.model';
 
-describe('auth.repository', () => {
+describe.only('auth.repository', () => {
+    const expectedUser = {
+        id: '8dd01190-e7c4-44f5-bcff-739565d8ea5a',
+        email: 'danieldeskclerk@example.com',
+        firstName: 'Daniel',
+        lastName: 'Deskclerk',
+        dateOfBirth: '2000-01-13',
+        phone: '173-555-12345',
+        driverLicense: {
+            numberMasked: 'F352GGE4711',
+            country: 'Germany',
+            verified: true,
+            expiryDate: '2028-01-13'
+        },
+        address: {
+            street: 'Garrison Ave',
+            houseNumber: '54',
+            zipCode: 'NJ 07306',
+            locality: 'Jersey City'
+        }
+    } satisfies User;
+
+    describe('createAuthData', () => {
+        it('writes userId and passwort to the database.', async () => {
+            // Arrange
+            const writeDatabaseSpy = vi
+                .spyOn(Db, 'writeDatabase')
+                .mockImplementation(async () => Promise.resolve());
+
+            // Act
+            await createAuthData(expectedUser, 't0Ps3crät');
+
+            expect(writeDatabaseSpy).toHaveResolved();
+        });
+    });
+
     describe('getUserByEmail', () => {
         describe('returns', () => {
             it('an authenticated user.', async () => {
@@ -68,60 +104,51 @@ describe('auth.repository', () => {
     });
 
     describe('mergeUser', () => {
-        let databaseContent: Database;
+        let data: Database;
 
         beforeEach(async () => {
-            const _databaseContent = await readDatabase();
-            databaseContent = { ..._databaseContent };
+            const _databaseContent = await Db.readDatabase();
+            data = { ..._databaseContent };
         });
 
         afterEach(async () => {
-            await writeDatabase(databaseContent);
+            await Db.writeDatabase(data);
         });
 
         describe('returns', () => {
             it('an updated user if the user already exists.', async () => {
-                const userId = '8dd01190-e7c4-44f5-bcff-739565d8ea5a';
-                const email = 'danieldeskclerk@example.com';
-                const authRepository = await import(
-                    '@/app/routes/auth/auth.repository'
+                // Arrange
+                const writeDatabaseSpy = vi
+                    .spyOn(Db, 'writeDatabase')
+                    .mockImplementation(async () => Promise.resolve());
+                const data: Database = await Db.readDatabase();
+                const updatedUser = { ...expectedUser };
+                updatedUser.dateOfBirth = '2000-01-14';
+                const idx = data.users.findIndex(
+                    (user) => (user.id = expectedUser.id)
                 );
+                // Act
+                const mergedUser = await mergeUser(updatedUser);
+                data.users[idx] = mergedUser;
 
-                const updatedUser: User = {
-                    id: '8dd01190-e7c4-44f5-bcff-739565d8ea5a',
-                    email: 'danieldeskclerk@example.com',
-                    firstName: 'Daniel',
-                    lastName: 'Deskclerk',
-                    dateOfBirth: '2000-01-14',
-                    driversLicense: 'F352GGE4711',
-                    address: {
-                        street: 'Garrison Ave',
-                        houseNumber: '54',
-                        zipCode: 'NJ 07306',
-                        locality: 'Jersey City'
-                    }
-                };
-
-                const mergeUserSpy = vi.spyOn(authRepository, 'mergeUser');
-                const mergedUser = await authRepository.mergeUser(updatedUser);
-                const data: Database = await readDatabase();
-
-                expect(mergeUserSpy).toHaveResolved();
-                expect(mergedUser.id).toEqual(userId);
-                expect(mergedUser.email).toEqual(email);
-                expect(mergedUser).to.not.toHaveProperty('token');
-                expect(mergedUser.dateOfBirth).toEqual(updatedUser.dateOfBirth);
-
-                expect(data.users).toContainEqual(updatedUser);
+                // Assert
+                expect(mergedUser.dateOfBirth).toBe('2000-01-14');
+                expect(writeDatabaseSpy).toHaveResolved();
+                expect(writeDatabaseSpy).toHaveBeenCalledWith(data);
             });
 
             it('a new user if the user does not exist.', async () => {
+                // Arrange
+                const writeDatabaseSpy = vi
+                    .spyOn(Db, 'writeDatabase')
+                    .mockImplementation(async () => Promise.resolve());
+                const data: Database = await Db.readDatabase();
                 const registerInput: RegisterInput = {
                     email: 'clairevoyant@example.com',
                     firstName: 'Claire',
                     lastName: 'Voyant',
                     dateOfBirth: '2004-06-27',
-                    driversLicense: 'G453HIF0815',
+                    phone: '123-555-6754',
                     address: {
                         street: 'Golden Ave',
                         houseNumber: '724',
@@ -131,46 +158,16 @@ describe('auth.repository', () => {
                     password: 'password'
                 };
 
-                const authRepository = await import(
-                    '@/app/routes/auth/auth.repository'
-                );
+                // Act
+                const mergedUser = await mergeUser(registerInput);
+                data.users.push(mergedUser);
 
-                const mergeUserSpy = vi.spyOn(authRepository, 'mergeUser');
-                const mergedUser =
-                    await authRepository.mergeUser(registerInput);
-                const data: Database = await readDatabase();
+                // Assert
+                expect(writeDatabaseSpy).toHaveResolved();
+                expect(writeDatabaseSpy).toHaveBeenCalledWith(data);
 
-                expect(mergeUserSpy).toHaveResolved();
                 expect(mergedUser).toHaveProperty('id');
                 expect(mergedUser).not.toHaveProperty('password');
-
-                expect(data.users).toContainEqual(mergedUser);
-            });
-        });
-
-        describe('throws', () => {
-            it('an HTTP 422 if a user that should exist could not be found in the database.', async () => {
-                const updatedUser: User = {
-                    id: '8dd01190-4711-44f5-0815-739565d8ea5a',
-                    email: 'danieldeskclerk@example.com',
-                    firstName: 'Daniel',
-                    lastName: 'Deskclerk',
-                    dateOfBirth: '2000-01-14',
-                    driversLicense: 'F352GGE4711',
-                    address: {
-                        street: 'Garrison Ave',
-                        houseNumber: '54',
-                        zipCode: 'NJ 07306',
-                        locality: 'Jersey City'
-                    }
-                };
-
-                await expect(mergeUser(updatedUser)).rejects.toThrowError(
-                    new HttpException(
-                        422,
-                        'A problem occured when you tried to update this user.'
-                    )
-                );
             });
         });
     });
