@@ -4,7 +4,7 @@ import { Option } from '@/db/option.model';
 import { User } from '@/db/user.model';
 
 export interface BookingDataInput {
-    userId: User['id'];
+    customerId: User['id'];
     carId: Car['id'];
     startDate: string;
     endDate: string;
@@ -13,3 +13,8 @@ export interface BookingDataInput {
 }
 
 export type RawBookingDataInput = Partial<BookingDataInput>;
+
+export interface BookingDataRecord extends BookingDataInput {
+    id: string;
+    price: number;
+}

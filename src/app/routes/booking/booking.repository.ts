@@ -1,5 +1,5 @@
 import HttpException from '@/app/models/HttpException';
-import { BookingDataRecord } from '@/db/booking-data-record';
+import { BookingDataRecord } from '@/db/booking-data-input.model';
 import type { Database } from '@/db/database.model';
 import { readDatabase, writeDatabase } from '@/db/db';
 import jsonata from 'jsonata';
@@ -61,3 +61,4 @@ const deleteBookingById = async (bookingId: string): Promise<void> => {
 };
 
 export { createBooking, deleteBookingById, getBookingById, getBookingsByCarId };
+

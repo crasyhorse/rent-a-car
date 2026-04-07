@@ -1,8 +1,3 @@
-export interface Payment {
-    id: string;
-    name: string;
-}
-
 export type PaymentStatus =
     | 'authorized'
     | 'submitted'

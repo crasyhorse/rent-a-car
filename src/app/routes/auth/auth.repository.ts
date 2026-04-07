@@ -1,5 +1,5 @@
 import HttpException from '@/app/models/HttpException';
-import { RegisterInput } from '@/app/routes/auth/register-input.model';
+import { RegisterInput } from '@/db/register-input.model';
 import { AuthData } from '@/db/auth-data.model';
 import type { Database } from '@/db/database.model';
 import { readDatabase, writeDatabase } from '@/db/db';

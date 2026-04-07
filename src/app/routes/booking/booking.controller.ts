@@ -3,8 +3,9 @@ import {
     cancelBooking,
     executeBooking
 } from '@/app/routes/booking/booking.service';
+import { AuthRequest, ensureUserMatchesAuth } from '@/app/routes/utilities';
 import { RawBookingDataInput } from '@/db/booking-data-input.model';
-import { NextFunction, Request, Response, Router } from 'express';
+import { NextFunction, Response, Router } from 'express';
 
 const router = Router();
 
@@ -12,32 +13,17 @@ router.post(
     '/bookings/:customerId',
     authHandler.required,
     async (
-        request: Request<
-            { customerId: string },
-            unknown,
-            { data: RawBookingDataInput }
-        >,
+        request: AuthRequest<{ customerId: string }, { data: RawBookingDataInput }>,
         response: Response,
         next: NextFunction
     ) => {
         try {
-            const authUserId = (request as Request & { auth?: { id?: string } })
-                .auth?.id;
+            const customerId = ensureUserMatchesAuth(request, 'customerId');
 
-            if (request.params.customerId !== request.body.data?.userId) {
+            if (customerId !== request.body.data?.customerId) {
                 response.status(422).json({
                     status: 422,
-                    message:
-                        'Customer id in path does not match payload user id.'
-                });
-                return;
-            }
-
-            if (authUserId && request.params.customerId !== authUserId) {
-                response.status(403).json({
-                    status: 403,
-                    message:
-                        'Forbidden. You can only create bookings for yourself.'
+                    message: 'Customer id does not match user id.'
                 });
                 return;
             }
@@ -54,27 +40,14 @@ router.delete(
     '/bookings/:customerId/:bookingId',
     authHandler.required,
     async (
-        request: Request<{ customerId: string; bookingId: string }>,
+        request: AuthRequest<{ customerId: string; bookingId: string }>,
         response: Response,
         next: NextFunction
     ) => {
         try {
-            const authUserId = (request as Request & { auth?: { id?: string } })
-                .auth?.id;
+            const customerId = ensureUserMatchesAuth(request, 'customerId');
 
-            if (authUserId && request.params.customerId !== authUserId) {
-                response.status(403).json({
-                    status: 403,
-                    message:
-                        'Forbidden. You can only cancel bookings for yourself.'
-                });
-                return;
-            }
-
-            await cancelBooking(
-                request.params.bookingId,
-                request.params.customerId
-            );
+            await cancelBooking(request.params.bookingId, customerId);
 
             response.status(204).end();
         } catch (error) {
@@ -84,3 +57,4 @@ router.delete(
 );
 
 export default router;
+

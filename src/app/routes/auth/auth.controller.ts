@@ -1,6 +1,6 @@
 import { login, register } from '@/app/routes/auth/auth.service';
-import { LoginInput } from '@/app/routes/auth/login-input.model';
-import { RawRegisterInput } from '@/app/routes/auth/register-input.model';
+import { LoginInput } from '@/db/login-input.model';
+import { RegisterInput } from '@/db/register-input.model';
 import { NextFunction, Request, Response, Router } from 'express';
 
 const router = Router();
@@ -18,7 +18,7 @@ const attachAuthCookie = (response: Response, token: string) => {
 router.post(
     '/auth/register',
     async (
-        request: Request<unknown, unknown, { user: RawRegisterInput }>,
+        request: Request<unknown, unknown, { user: RegisterInput }>,
         response: Response,
         next: NextFunction
     ) => {

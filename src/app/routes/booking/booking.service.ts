@@ -14,7 +14,7 @@ import {
     BookingDataInput,
     RawBookingDataInput
 } from '@/db/booking-data-input.model';
-import { BookingDataRecord } from '@/db/booking-data-record';
+import { BookingDataRecord } from '@/db/booking-data-input.model';
 import { Car } from '@/db/car.model';
 import { Insurance } from '@/db/insurance.model';
 import { Option } from '@/db/option.model';
@@ -25,7 +25,7 @@ const executeBooking = async (
     bookingInput: RawBookingDataInput
 ): Promise<BookingData> => {
     const normalizedInput: BookingDataInput = {
-        userId: bookingInput.userId?.trim() ?? '',
+        customerId: bookingInput.customerId?.trim() ?? '',
         carId: bookingInput.carId?.trim() ?? '',
         insuranceId: bookingInput.insuranceId?.trim() ?? '',
         optionId: bookingInput.optionId?.trim() ?? '',
@@ -42,7 +42,7 @@ const executeBooking = async (
     );
 
     if (conflictingBooking) {
-        if (conflictingBooking.userId !== normalizedInput.userId) {
+        if (conflictingBooking.customerId !== normalizedInput.customerId) {
             throw new HttpException(
                 409,
                 'This car has already been booked by another user in this period.'
@@ -56,7 +56,7 @@ const executeBooking = async (
     }
 
     const [user, car, insurance, option] = await Promise.all([
-        getUserById(normalizedInput.userId),
+        getUserById(normalizedInput.customerId),
         getCarById(normalizedInput.carId),
         getInsuranceById(normalizedInput.insuranceId),
         getOptionById(normalizedInput.optionId)
@@ -137,17 +137,17 @@ const calculatePrice = (
 
 const cancelBooking = async (
     bookingId: string,
-    userId: string
+    customerId: string
 ): Promise<void> => {
     const normalizedBookingId = bookingId.trim();
-    const normalizedUserId = userId.trim();
+    const normalizedCustomerId = customerId.trim();
 
     if (!normalizedBookingId) {
         throw new HttpException(422, 'Booking id cannot be blank.');
     }
 
-    if (!normalizedUserId) {
-        throw new HttpException(422, 'User id cannot be blank.');
+    if (!normalizedCustomerId) {
+        throw new HttpException(422, 'Customer id cannot be blank.');
     }
 
     const booking = await getBookingById(normalizedBookingId);
@@ -156,7 +156,7 @@ const cancelBooking = async (
         throw new HttpException(404, 'Booking could not be found.');
     }
 
-    if (booking.userId !== normalizedUserId) {
+    if (booking.customerId !== normalizedCustomerId) {
         throw new HttpException(
             403,
             'Forbidden. You can only cancel your own bookings.'

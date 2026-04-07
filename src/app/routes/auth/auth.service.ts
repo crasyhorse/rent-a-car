@@ -7,11 +7,8 @@ import {
     mergeUser,
     userIsUnique
 } from '@/app/routes/auth/auth.repository';
-import { LoginInput } from '@/app/routes/auth/login-input.model';
-import {
-    RawRegisterInput,
-    RegisterInput
-} from '@/app/routes/auth/register-input.model';
+import { LoginInput } from '@/db/login-input.model';
+import { RegisterInput } from '@/db/register-input.model';
 import { User } from '@/db/user.model';
 import * as bcrypt from 'bcryptjs';
 import type { Secret } from 'jsonwebtoken';
@@ -45,7 +42,7 @@ const login = async (
 };
 
 const register = async (
-    registerPayload: RawRegisterInput
+    registerPayload: RegisterInput
 ): Promise<AuthResponse> => {
     const email = registerPayload.email?.trim();
     const password = registerPayload.password?.trim();

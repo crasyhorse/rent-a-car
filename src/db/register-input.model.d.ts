@@ -7,6 +7,3 @@ export interface RegisterInput extends Omit<
     password: string;
 }
 
-export type RawRegisterInput = Omit<Partial<RegisterInput>, 'address'> & {
-    address?: Partial<RegisterInput['address']>;
-};
