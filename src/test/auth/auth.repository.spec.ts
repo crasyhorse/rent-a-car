@@ -4,8 +4,7 @@ import {
     getPasswordById,
     getUserByEmail,
     getUserById,
-    mergeUser,
-    userIsUnique
+    mergeUser
 } from '@/app/routes/auth/auth.repository';
 import type { Database } from '@/db/database.model';
 import * as DB from '@/db/db';
@@ -35,7 +34,7 @@ describe('auth.repository', () => {
             zipCode: 'NJ 07306',
             locality: 'Jersey City'
         }
-    } satisfies User;
+    };
 
     beforeEach(() => {
         databaseMock = {
@@ -47,6 +46,7 @@ describe('auth.repository', () => {
             options: []
         };
     });
+
     afterEach(() => {
         vi.resetAllMocks();
         vi.restoreAllMocks();
@@ -197,6 +197,7 @@ describe('auth.repository', () => {
                         ])
                     })
                 );
+                expect(readDatabaseSpy).toHaveResolved()
             });
 
             it('a new user if the user does not exist.', async () => {

@@ -4,8 +4,7 @@ import {
     createAuthData,
     getPasswordById,
     getUserByEmail,
-    mergeUser,
-    userIsUnique
+    mergeUser
 } from '@/app/routes/auth/auth.repository';
 import { LoginInput } from '@/db/login-input.model';
 import { RegisterInput } from '@/db/register-input.model';
@@ -38,7 +37,7 @@ const login = async (
         }
     }
 
-    throw new HttpException(403, 'Login failed.');
+    throw new HttpException(403, 'Login failed!');
 };
 
 const register = async (
@@ -100,9 +99,9 @@ const register = async (
         throw new HttpException(422, 'Locality cannot be blank.');
     }
 
-    const isUnique = await userIsUnique(email);
+    const userExists = await getUserByEmail(email);
 
-    if (!isUnique) {
+    if (userExists) {
         throw new HttpException(
             422,
             'A user with this email address does already exist.'
