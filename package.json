@@ -8,7 +8,7 @@
     "scripts": {
         "dev": "nodemon -r tsconfig-paths/register -x tsx src/main.ts",
         "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-        "test": "vitest"
+        "test": "vitest --coverage"
     },
     "author": "Crasyhorse",
     "license": "MIT",
@@ -24,6 +24,7 @@
         "@types/express": "^5.0.6",
         "@types/morgan": "^1.9.10",
         "@types/node": "^20.19.37",
+        "@vitest/coverage-istanbul": "4.1.2",
         "eslint": "^10.1.0",
         "eslint-config-prettier": "^10.1.8",
         "nodemon": "^3.1.14",

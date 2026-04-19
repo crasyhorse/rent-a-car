@@ -11,7 +11,13 @@ export default defineConfig(({ mode }) => ({
     test: {
         name: 'node',
         environment: 'node',
-        env: loadEnv(mode, process.cwd(), 'VITE_')
+        env: loadEnv(mode, process.cwd(), 'VITE_'),
+        coverage: {
+            provider: 'istanbul',
+            reporter: 'html',
+            include: ['src/**'],
+            reportOnFailure: true
+        }
     }
 }));
 
