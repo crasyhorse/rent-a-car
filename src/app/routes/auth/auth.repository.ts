@@ -17,7 +17,6 @@ const createAuthData = async (user: User, password: string): Promise<void> => {
     };
 
     data.auth.push(authData);
-
     await writeDatabase(data);
 };
 
@@ -57,14 +56,6 @@ const mergeUser = async (user: User | RegisterInput): Promise<User> => {
     await writeDatabase(data);
 
     return mergedUser;
-};
-
-const userExists = async (
-    email: string
-): Promise<(user: User) => user is User> => {
-    const _user = await getUserByEmail(email);
-
-    return (user: User): user is User => user === _user;
 };
 
 const createUser = (user: RegisterInput): User => {
@@ -112,7 +103,6 @@ export {
     getPasswordById,
     getUserByEmail,
     getUserById,
-    mergeUser,
-    userExists as userIsUnique
+    mergeUser
 };
 
