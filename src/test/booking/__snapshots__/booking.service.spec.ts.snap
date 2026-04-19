@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`booking.service > getBookingById > returns > a booking record for the given booking id. 1`] = `
+{
+  "carId": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+  "customerId": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+  "endDate": "2025-01-25T19:00:00.000Z",
+  "id": "2c51ef95-173b-4e72-9a32-e7c13c361353",
+  "insuranceId": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+  "optionId": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+  "price": 901.2,
+  "startDate": "2025-01-18T12:00:00.000Z",
+}
+`;
+
+exports[`booking.service > getBookingsByCarId > returns > an array with booking records for the given carId. 1`] = `
+[
+  {
+    "carId": "4ec570ea-3afd-4fad-af60-dad23d4c7d37",
+    "customerId": "8dd01190-e7c4-44f5-bcff-739565d8ea5a",
+    "endDate": "2025-01-25T19:00:00.000Z",
+    "id": "2c51ef95-173b-4e72-9a32-e7c13c361353",
+    "insuranceId": "f2e76ffa-8c6c-47ef-bfa8-8aef6e685d1d",
+    "optionId": "13744176-67c5-4f9e-bf01-204dd95ba3e5",
+    "price": 901.2,
+    "startDate": "2025-01-18T12:00:00.000Z",
+  },
+]
+`;
